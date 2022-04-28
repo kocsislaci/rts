@@ -6,7 +6,7 @@ namespace RtsGameManager
 {
     public class GameManager : RtsPattern.Singleton
     {
-        public static List<UnitManager> SELECTED_UNITS = new List<UnitManager>();
+        public static List<UnitSelectionController> SELECTED_UNITS = new List<UnitSelectionController>();
     }
 }
 
