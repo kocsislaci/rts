@@ -10,6 +10,7 @@ public class CommandsManager : MonoBehaviour
     private InputActions _inputActions;
     private InputAction _mousePosition;
     private InputAction _execute;
+    private InputAction _modifier;
 
     private List<CommandExecuter> targetUnits = new List<CommandExecuter>();
 
@@ -19,6 +20,7 @@ public class CommandsManager : MonoBehaviour
         _inputActions = new InputActions();
         _mousePosition = _inputActions.UnitActionMap.MousePosition;
         _execute = _inputActions.UnitActionMap.Execute;
+        _modifier = _inputActions.UnitActionMap.Modifier;
     }
 
     private void OnEnable()
@@ -35,6 +37,7 @@ public class CommandsManager : MonoBehaviour
 
     private void GatherTargets()
     {
+        targetUnits.Clear();
         if (RtsGameManager.GameManager.SELECTED_UNITS.Count != 0)
         {
             foreach (var selected in RtsGameManager.GameManager.SELECTED_UNITS)
@@ -61,6 +64,10 @@ public class CommandsManager : MonoBehaviour
         MoveCommand move = new MoveCommand(GetPosOnTerrain());
         foreach (var target in targetUnits)
         {
+            if (!_modifier.IsPressed())
+            {
+                target.ResetCommands();
+            }
             target.AddCommand(move);
         }
     }

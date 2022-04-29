@@ -471,6 +471,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1417057153409224517, guid: 2afba9dca174542a5acd4e530845f401, type: 3}
+      propertyPath: m_Acceleration
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1417057153409224518, guid: 2afba9dca174542a5acd4e530845f401, type: 3}
       propertyPath: m_RootOrder
       value: 4

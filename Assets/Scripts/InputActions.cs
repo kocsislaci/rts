@@ -53,6 +53,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Modifier"",
+                    ""type"": ""Value"",
+                    ""id"": ""510e9a90-674b-424b-9fc7-9354f174eec7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -86,6 +95,17 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Execute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2821d4d6-654a-4183-89f1-8d9f0a3fd1bb"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Modifier"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -252,6 +272,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_UnitActionMap_MousePosition = m_UnitActionMap.FindAction("MousePosition", throwIfNotFound: true);
         m_UnitActionMap_Select = m_UnitActionMap.FindAction("Select", throwIfNotFound: true);
         m_UnitActionMap_Execute = m_UnitActionMap.FindAction("Execute", throwIfNotFound: true);
+        m_UnitActionMap_Modifier = m_UnitActionMap.FindAction("Modifier", throwIfNotFound: true);
         // CameraMovementActionMap
         m_CameraMovementActionMap = asset.FindActionMap("CameraMovementActionMap", throwIfNotFound: true);
         m_CameraMovementActionMap_MoveCamera = m_CameraMovementActionMap.FindAction("MoveCamera", throwIfNotFound: true);
@@ -318,6 +339,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_UnitActionMap_MousePosition;
     private readonly InputAction m_UnitActionMap_Select;
     private readonly InputAction m_UnitActionMap_Execute;
+    private readonly InputAction m_UnitActionMap_Modifier;
     public struct UnitActionMapActions
     {
         private @InputActions m_Wrapper;
@@ -325,6 +347,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @MousePosition => m_Wrapper.m_UnitActionMap_MousePosition;
         public InputAction @Select => m_Wrapper.m_UnitActionMap_Select;
         public InputAction @Execute => m_Wrapper.m_UnitActionMap_Execute;
+        public InputAction @Modifier => m_Wrapper.m_UnitActionMap_Modifier;
         public InputActionMap Get() { return m_Wrapper.m_UnitActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -343,6 +366,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Execute.started -= m_Wrapper.m_UnitActionMapActionsCallbackInterface.OnExecute;
                 @Execute.performed -= m_Wrapper.m_UnitActionMapActionsCallbackInterface.OnExecute;
                 @Execute.canceled -= m_Wrapper.m_UnitActionMapActionsCallbackInterface.OnExecute;
+                @Modifier.started -= m_Wrapper.m_UnitActionMapActionsCallbackInterface.OnModifier;
+                @Modifier.performed -= m_Wrapper.m_UnitActionMapActionsCallbackInterface.OnModifier;
+                @Modifier.canceled -= m_Wrapper.m_UnitActionMapActionsCallbackInterface.OnModifier;
             }
             m_Wrapper.m_UnitActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -356,6 +382,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Execute.started += instance.OnExecute;
                 @Execute.performed += instance.OnExecute;
                 @Execute.canceled += instance.OnExecute;
+                @Modifier.started += instance.OnModifier;
+                @Modifier.performed += instance.OnModifier;
+                @Modifier.canceled += instance.OnModifier;
             }
         }
     }
@@ -451,6 +480,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnMousePosition(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnExecute(InputAction.CallbackContext context);
+        void OnModifier(InputAction.CallbackContext context);
     }
     public interface ICameraMovementActionMapActions
     {

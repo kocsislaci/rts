@@ -1,5 +1,5 @@
 {
-    "name": "RtsInputActions",
+    "name": "InputActions",
     "maps": [
         {
             "name": "UnitActionMap",
@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Modifier",
+                    "type": "Value",
+                    "id": "510e9a90-674b-424b-9fc7-9354f174eec7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -64,6 +73,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Execute",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2821d4d6-654a-4183-89f1-8d9f0a3fd1bb",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Modifier",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

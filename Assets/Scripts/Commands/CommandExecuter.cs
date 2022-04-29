@@ -58,7 +58,7 @@ public class CommandExecuter : MonoBehaviour
         while (isExecuting)
         {
             yield return new WaitForSeconds(.1f);
-            if ((targetPos - this.transform.position).magnitude < 0.2f)
+            if ((targetPos - this.transform.position).magnitude < 0.6f || _navMeshAgent.isPathStale)
             {
                 _commands.RemoveAt(0);
                 isExecuting = false;
@@ -67,5 +67,22 @@ public class CommandExecuter : MonoBehaviour
     }
 
     
-    
+    //TODO: different type of actions
+    IEnumerator Attack()
+    {
+        yield return new WaitForSeconds(.1f);
+ 
+    }
+
+    IEnumerator Gather()
+    {
+        yield return new WaitForSeconds(.1f);
+
+    }
+
+    IEnumerator Build()
+    {
+        yield return new WaitForSeconds(.1f);
+
+    }
 }
