@@ -52,7 +52,6 @@ public class UnitsSelectionManager : MonoBehaviour
         _isDraggingMouseBox = true;
         _dragStartPosition = GetMousePosition();
     }
-
     private void Dragging()
     {
         if (_isDraggingMouseBox && _dragStartPosition != GetMousePosition())
@@ -86,7 +85,6 @@ public class UnitsSelectionManager : MonoBehaviour
         foreach (UnitSelectionController um in selectedUnits)
             um.Deselect();
     }
-    
     void OnGUI()
     {
         if (_isDraggingMouseBox)
@@ -97,7 +95,6 @@ public class UnitsSelectionManager : MonoBehaviour
             RtsUtils.SelectionUtils.DrawScreenRectBorder(rect, 1, new Color(0.5f, 1f, 0.4f));
         }
     }
-
     private Vector3 GetMousePosition()
     {
         return new Vector3(

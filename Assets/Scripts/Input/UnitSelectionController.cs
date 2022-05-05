@@ -7,8 +7,6 @@ public class UnitSelectionController : MonoBehaviour
 {
     public GameObject selectionCircle;
     
-    
-
     public void Select()
     {
         Select(false);
@@ -25,7 +23,6 @@ public class UnitSelectionController : MonoBehaviour
         RtsGameManager.GameManager.SELECTED_UNITS.Add(this);
         selectionCircle.SetActive(true);
     }
-
     public void Deselect()
     {
         if (!RtsGameManager.GameManager.SELECTED_UNITS.Contains(this)) return;
