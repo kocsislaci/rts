@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df972707ecd744a09ed29596a7e18cfe, type: 3}
+  m_Name: SoldierSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SoldierSettings
+  unitName: Soldier
+  color: {r: 0, g: 0.3584906, b: 0.03140061, a: 0}
+  team: 0
+  speed: 5
+  damage: 2
+  attackSpeed: 1
+  currentHealth: 10
+  maxHealth: 10
+  defense: 1

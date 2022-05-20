@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using RtsGameManager;
@@ -22,19 +23,56 @@ public class CommandsManager : MonoBehaviour
         _execute = _inputActions.UnitActionMap.Execute;
         _modifier = _inputActions.UnitActionMap.Modifier;
     }
-
     private void OnEnable()
     {
         _execute.started += _ => GatherTargets();
         _execute.performed += _ => SelectAction();
         _inputActions.Enable();
     }
-
     private void OnDisable()
     {
         _inputActions.Disable();
     }
 
+    private void SelectAction()
+    {
+        
+        SendMoveCommand();
+
+        //todo: 
+        //move to pos of other unit, 
+        //move to closest part of a building
+        //follow
+        //attack
+        //gather
+        //build
+        //
+    }
+    private void SendMoveCommand()
+    { 
+        Vector3? targetPos = _GetPosOnTerrain();
+            
+        foreach (var target in targetUnits)
+        {
+            if (!_modifier.IsPressed())
+            {
+                target.ResetCommands();
+            }
+            MoveCommand move;
+            if (targetPos == null)
+            {
+                move = new MoveCommand(target.transform.position);
+            }
+            else
+            {
+                move = new MoveCommand((Vector3)targetPos);
+            }
+            target.AddCommand(move);
+        }
+        
+    }
+    
+    
     private void GatherTargets()
     {
         targetUnits.Clear();
@@ -46,49 +84,22 @@ public class CommandsManager : MonoBehaviour
             }
         }
     }
-
-    private void SelectAction()
+    private Vector3? _GetPosOnTerrain()
     {
-        SendMoveCommand();
-
-        //todo: 
-        //move
-        //attack
-        //gather
-        //
-        //reset and add
-        //add and add like a queue
-    }
-    private void SendMoveCommand()
-    {
-        MoveCommand move = new MoveCommand(GetPosOnTerrain());
-        foreach (var target in targetUnits)
-        {
-            if (!_modifier.IsPressed())
-            {
-                target.ResetCommands();
-            }
-            target.AddCommand(move);
-        }
-    }
-
-
-    private Vector3 GetPosOnTerrain()
-    {
-        Ray _ray = Camera.main.ScreenPointToRay(GetMousePosition());
+        Ray _ray = Camera.main.ScreenPointToRay(_GetMousePosition());
         RaycastHit _raycastHit;
-        if (Physics.Raycast(_ray, out _raycastHit, 1000f))
+        int terrainLayerMask = LayerMask.GetMask("Terrain");
+        if (Physics.Raycast(_ray, out _raycastHit, 1000f, terrainLayerMask))
         {
-            if (_raycastHit.transform.tag == "Terrain")
-            {
-                return _raycastHit.point;
-            }
+            return _raycastHit.point;
         }
-
-        return new Vector3(0, 0, 0); //todo: try catch something
+        return null;
     }
-    
-    private Vector3 GetMousePosition()
+    private Vector3 _GetPosOnFollow()
+    {
+        return Vector3.zero; //TODO
+    }
+    private Vector3 _GetMousePosition()
     {
         return new Vector3(
             _mousePosition.ReadValue<Vector2>().x,

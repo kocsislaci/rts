@@ -15,7 +15,14 @@ public class MoveCommand : ICommand
     {
         _targetPos = clickPos;
     }
-
+}
+public class FollowCommand : ICommand
+{
+    public GameObject _targetUnit;
+    public FollowCommand(GameObject targetUnit)
+    {
+        _targetUnit = targetUnit;
+    }
 }
 // public class AttackCommand : ICommand
 // {

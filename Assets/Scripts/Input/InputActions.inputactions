@@ -94,9 +94,36 @@
             "id": "1713dc32-0425-4dce-80b5-73956da5fc9d",
             "actions": [
                 {
+                    "name": "MousePosition",
+                    "type": "Value",
+                    "id": "582d873c-bd99-443f-b3c1-6b55ab2c3495",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "MoveCamera",
                     "type": "Value",
                     "id": "08ad4b41-4db0-45aa-8bb8-ec6710ce1495",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RotateCamera",
+                    "type": "Value",
+                    "id": "5f4c7b95-ca28-4a80-bae2-22a024037aea",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ZoomCamera",
+                    "type": "Value",
+                    "id": "98a4175f-b9b9-4915-b7ae-d8bbe5629ae4",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -105,7 +132,40 @@
             ],
             "bindings": [
                 {
-                    "name": "Arrows",
+                    "name": "",
+                    "id": "e1b5ee93-8076-4fc3-937e-d7385899bf84",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MousePosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2814c9bf-da3f-4508-8273-33565521c0b4",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ZoomCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "006d364a-4474-4b2c-86de-d42260d5aade",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "RotateCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
                     "id": "28bdfb47-e15f-46ed-8344-3899be8a660d",
                     "path": "Dpad",
                     "interactions": "",
@@ -121,7 +181,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse",
                     "action": "MoveCamera",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -132,7 +192,7 @@
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse",
                     "action": "MoveCamera",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -143,7 +203,7 @@
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse",
                     "action": "MoveCamera",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -154,7 +214,7 @@
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse",
                     "action": "MoveCamera",
                     "isComposite": false,
                     "isPartOfComposite": true

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
@@ -8,6 +9,8 @@ public class UnitsSelectionManager : MonoBehaviour
 {
     private bool _isDraggingMouseBox = false;
     private Vector3 _dragStartPosition;
+
+    public UnityEvent selectionEvent;
     
     Ray _ray;
     RaycastHit _raycastHit;
@@ -18,6 +21,8 @@ public class UnitsSelectionManager : MonoBehaviour
     
     private void Awake()
     {
+        selectionEvent = new UnityEvent();
+        
         _inputActions = new InputActions();
         _mousePosition = _inputActions.UnitActionMap.MousePosition;
         _select = _inputActions.UnitActionMap.Select;
@@ -46,6 +51,7 @@ public class UnitsSelectionManager : MonoBehaviour
                 _raycastHit.transform.gameObject.GetComponent<UnitSelectionController>().Select();
             }
         }
+        selectionEvent.Invoke();
     }
     private void DraggingStarts()
     {
@@ -74,9 +80,12 @@ public class UnitsSelectionManager : MonoBehaviour
         {
             inBounds = selectionBounds.Contains(Camera.main.WorldToViewportPoint(unit.transform.position));
             if (inBounds)
+            {
                 unit.GetComponent<UnitSelectionController>().Select();
+            }
             else
                 unit.GetComponent<UnitSelectionController>().Deselect();
+            selectionEvent.Invoke();
         }
     }
     private void _DeselectAllUnits()
