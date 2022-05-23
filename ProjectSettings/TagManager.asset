@@ -7,6 +7,12 @@ TagManager:
   - Terrain
   - Unit
   - Selection
+  - Building
+  - Resource
+  - Obstacle
+  - PropertyType
+  - PropertyValue
+  - MainBuilding
   layers:
   - Default
   - TransparentFX
@@ -17,10 +23,10 @@ TagManager:
   - Terrain
   - Unit
   - MinimapIndicator
-  - 
-  - 
-  - 
-  - 
+  - Building
+  - Resource
+  - Obstacle
+  - Spawnpoint
   - 
   - 
   - 

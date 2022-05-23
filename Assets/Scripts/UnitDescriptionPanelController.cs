@@ -1,14 +1,15 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using RtsGameManager;
 using UnityEngine;
 
-public class UnitController : MonoBehaviour
+public class UnitDescriptionPanelController : MonoBehaviour
 {
+    public GameObject labelPrefab;
     // Start is called before the first frame update
-    private void Awake()
+    void Start()
     {
-        RtsGameManager.GameManager.UNITS.Add(this);
+        
     }
 
     // Update is called once per frame

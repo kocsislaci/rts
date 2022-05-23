@@ -16,6 +16,7 @@ MonoBehaviour:
   color: {r: 0, g: 0.3584906, b: 0.03140061, a: 0}
   team: 0
   speed: 5
+  population: 1
   damage: 2
   attackSpeed: 1
   currentHealth: 10

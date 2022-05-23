@@ -5,7 +5,7 @@ using UnityEngine;
 public class PeasantController : MonoBehaviour
 {
     [SerializeField]
-    private PeasantSettings _settings;
+    public PeasantSettings _settings;
     public PeasantDescription description;
     void Start()
     {

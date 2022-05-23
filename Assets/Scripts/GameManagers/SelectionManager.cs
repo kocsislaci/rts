@@ -5,12 +5,13 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 
-public class UnitsSelectionManager : MonoBehaviour
+public class SelectionManager : MonoBehaviour
 {
     private bool _isDraggingMouseBox = false;
     private Vector3 _dragStartPosition;
 
-    public UnityEvent selectionEvent;
+    public UnityEvent<SelectionController> selectionEvent;
+    public UnityEvent deselectionEvent;
     
     Ray _ray;
     RaycastHit _raycastHit;
@@ -21,8 +22,9 @@ public class UnitsSelectionManager : MonoBehaviour
     
     private void Awake()
     {
-        selectionEvent = new UnityEvent();
-        
+        selectionEvent = new UnityEvent<SelectionController>();
+        deselectionEvent = new UnityEvent();
+
         _inputActions = new InputActions();
         _mousePosition = _inputActions.UnitActionMap.MousePosition;
         _select = _inputActions.UnitActionMap.Select;
@@ -30,7 +32,7 @@ public class UnitsSelectionManager : MonoBehaviour
     private void OnEnable()
     {
         _select.started += _ => DraggingStarts();
-        _select.performed += _ => SelectSingleUnit();
+        _select.performed += _ => SelectSingle();
         _select.canceled += _ => DraggingStops();
         _mousePosition.performed += _ => Dragging();
         _inputActions.Enable();
@@ -39,24 +41,33 @@ public class UnitsSelectionManager : MonoBehaviour
     {
         _inputActions.Disable();
     }
-
-    private void SelectSingleUnit()
+    
+    private void SelectSingle()
     {
+        
         _DeselectAllUnits();
+        _DeselectAllBuilding();
+        deselectionEvent.Invoke();
         _ray = Camera.main.ScreenPointToRay(GetMousePosition());
         if (Physics.Raycast(_ray, out _raycastHit, 1000f))
         {
-            if (_raycastHit.transform.tag == "Unit")
+            if (_raycastHit.transform.tag == "Building")
+            {
+                _raycastHit.transform.gameObject.GetComponentInParent<BuildingSelectionController>().Select();
+                selectionEvent.Invoke(_raycastHit.transform.gameObject.GetComponent<SelectionController>());
+            }
+            else if (_raycastHit.transform.tag == "Unit")
             {
                 _raycastHit.transform.gameObject.GetComponent<UnitSelectionController>().Select();
+                selectionEvent.Invoke(_raycastHit.transform.gameObject.GetComponent<SelectionController>());
             }
         }
-        selectionEvent.Invoke();
     }
     private void DraggingStarts()
     {
         _isDraggingMouseBox = true;
         _dragStartPosition = GetMousePosition();
+        _DeselectAllBuilding(); // TODO: Is it necessary?
     }
     private void Dragging()
     {
@@ -85,7 +96,6 @@ public class UnitsSelectionManager : MonoBehaviour
             }
             else
                 unit.GetComponent<UnitSelectionController>().Deselect();
-            selectionEvent.Invoke();
         }
     }
     private void _DeselectAllUnits()
@@ -93,6 +103,12 @@ public class UnitsSelectionManager : MonoBehaviour
         List<UnitSelectionController> selectedUnits = new List<UnitSelectionController>(RtsGameManager.GameManager.SELECTED_UNITS);
         foreach (UnitSelectionController um in selectedUnits)
             um.Deselect();
+    }
+    private void _DeselectAllBuilding()
+    {
+        List<BuildingSelectionController> selectedBuildings = new List<BuildingSelectionController>(RtsGameManager.GameManager.SELECTED_BUILDINGS);
+        foreach (BuildingSelectionController bsc in selectedBuildings)
+            bsc.Deselect();
     }
     void OnGUI()
     {

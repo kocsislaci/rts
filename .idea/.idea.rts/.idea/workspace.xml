@@ -3,20 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="77066dda-a37f-4b82-b6da-9e1aff66986a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.rts/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.rts/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Units/Unit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Units/Unit.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Units/Peasant.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Units/Peasant.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Units/Soldier.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Units/Soldier.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Units/SoldierSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Units/SoldierSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/CommandExecuter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Units/CommandExecuter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/CommandExecuter.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Units/CommandExecuter.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/CommandsManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/CommandsManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/ICommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/ICommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManagers/CommandsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManagers/CommandsManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManagers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManagers/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputActions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputActions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputActions.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/UnitSelectionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Units/UnitSelectionController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/UnitSelectionController.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Units/UnitSelectionController.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/UnitsSelectionManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/UnitsSelectionManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManagers/SceneLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManagers/SceneLoader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManagers/UiManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManagers/UiManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManagers/UnitsSelectionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManagers/SelectionManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManagers/UnitsSelectionManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManagers/SelectionManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Units/CommandExecuter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Units/CommandExecuter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/PeasantController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/PeasantController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/SoldierController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/SoldierController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/UnitController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/UnitController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Units/UnitSelectionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Units/UnitSelectionController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Units/UnitSettings/SoldierSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Units/UnitSettings/SoldierSettings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,17 +38,26 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/InputSystem/Utilities/DelegateHelpers.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManagers/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D4BB098C-CE9A-4793-AFCC-A824C1D0EA01/77/87f3afff/ResourcesAPI.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Units/TypeOfUnits/SoldierDescription.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManagers/UiManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/UIBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D4BB098C-CE9A-4793-AFCC-A824C1D0EA01/25/15271dd8/Resources.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Units/Controllers/SoldierController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utils/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/de/50eabd34/MidpointRounding.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Buildings/MainBuildingController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D4BB098C-CE9A-4793-AFCC-A824C1D0EA01/77/87f3afff/ResourcesAPI.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TMP_InputField.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D4BB098C-CE9A-4793-AFCC-A824C1D0EA01/25/15271dd8/Resources.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManagers/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/UIBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D4BB098C-CE9A-4793-AFCC-A824C1D0EA01/85/8482a024/ScriptableObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Units/TypeOfUnits/SoldierDescription.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utils/SelectionUtils.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utils/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SelectionController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UnitDescriptionPanelController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/InputSystem/Utilities/DelegateHelpers.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManagers/UiManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Buildings/BuildingSelectionController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/99258562-0D64-4271-98DD-F3A0E1467733/b2/1a57c174/Math.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Buildings/BuildingController.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -65,25 +76,40 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Commands/CommandsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Commands/CommandExecuter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UnitSettings.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/GameManagers/CommandsManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/GameManagers/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Units/TypeOfUnits/Soldier.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Units/UnitDescription.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Units/UnitSettings.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Units/UnitSettings/SoldierSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Units/UnitSettings/PeasantSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Units/UnitController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/UnitController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Units/UnitSettings/UnitSettings.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/PeasantController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/SoldierController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Units/TypeOfUnits/UnitDescription.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Units/TypeOfUnits/PeasantDescription.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Units/TypeOfUnits/SoldierDescription.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GameManagers/UnitsSelectionManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/GameManagers/UiManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Units/CommandExecuter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GameManagers/CameraController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Units/IMoveStrategies.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Units/UnitStrategies/IMoveStrategies.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Units/UnitStrategies/MoveRowStrategy.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Units/CommandExecuter.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Units/UnitStrategies/MoveBoxStrategy.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Buildings/Building.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/SelectionController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Units/UnitSelectionController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Buildings/BuildingSelectionController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GameManagers/CommandsManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Buildings/House.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Buildings/MainBuildingController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Buildings/BuildingController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Buildings/HouseController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/UnitController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Units/UnitSettings/SoldierSettings.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GameManagers/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GameManagers/SceneLoader.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UnitDescriptionPanelController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/SoldierController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Units/Controllers/PeasantController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GameManagers/SelectionManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GameManagers/UiManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="28F6iw3ZxqiUvrjmGSnlNFWaK3I" />
@@ -136,6 +162,8 @@
       <workItem from="1651137248684" duration="19174000" />
       <workItem from="1652255364950" duration="19985000" />
       <workItem from="1652988100666" duration="9282000" />
+      <workItem from="1653299522620" duration="10077000" />
+      <workItem from="1653325507366" duration="9764000" />
     </task>
     <servers />
   </component>

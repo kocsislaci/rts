@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,17 +6,17 @@ using UnityEngine;
 public class SoldierController : UnitController
 {
     [SerializeField]
-    private SoldierSettings _settings;
+    public SoldierSettings _settings;
     public SoldierDescription description;
     void Start()
     {
         _settings = Resources.Load<SoldierSettings>("Units/SoldierSettings");
-        description = this.gameObject.GetComponent<SoldierDescription>();
-        description.Speed = _settings.speed;
+        RtsGameManager.GameManager.population.ActualPopulation += _settings.population;
     }
-    
-    // Update is called once per frame
-    void Update()
+
+
+    private void OnDestroy()
     {
+        RtsGameManager.GameManager.population.ActualPopulation -= _settings.population;
     }
 }

@@ -36,8 +36,9 @@ public class CommandsManager : MonoBehaviour
 
     private void SelectAction()
     {
-        
-        SendMoveCommand();
+        MoveRowStrategy rowStrategy = new MoveRowStrategy(); //TODO
+        MoveBoxStrategy boxStrategy = new MoveBoxStrategy(); //TODO
+        SendMoveCommand(boxStrategy);
 
         //todo: 
         //move to pos of other unit, 
@@ -48,9 +49,12 @@ public class CommandsManager : MonoBehaviour
         //build
         //
     }
-    private void SendMoveCommand()
-    { 
+    private void SendMoveCommand(IMoveStrategies strategy)
+    {
         Vector3? targetPos = _GetPosOnTerrain();
+
+
+        
             
         foreach (var target in targetUnits)
         {
@@ -65,14 +69,13 @@ public class CommandsManager : MonoBehaviour
             }
             else
             {
-                move = new MoveCommand((Vector3)targetPos);
+                Vector3 calculatedTargetPos = strategy.CalculateMovementStrategy(targetPos!, targetUnits.IndexOf(target));
+                move = new MoveCommand(calculatedTargetPos);
             }
             target.AddCommand(move);
         }
         
     }
-    
-    
     private void GatherTargets()
     {
         targetUnits.Clear();
@@ -107,3 +110,4 @@ public class CommandsManager : MonoBehaviour
             0.0f);
     }
 }
+

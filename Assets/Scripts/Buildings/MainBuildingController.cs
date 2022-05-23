@@ -1,14 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitController : MonoBehaviour
+public class MainBuildingController : BuildingController
 {
     // Start is called before the first frame update
-    private void Awake()
+    void Start()
     {
-        RtsGameManager.GameManager.UNITS.Add(this);
+        
     }
 
     // Update is called once per frame

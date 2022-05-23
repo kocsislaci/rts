@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RtsGameManager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 
 public class UiManager : MonoBehaviour
@@ -18,12 +20,15 @@ public class UiManager : MonoBehaviour
 
     public GameObject UnitPanel;
     private GameObject _unitPanelPrefab;
-    
+
+    public GameObject CommandPanel;
+    public GameObject commandPrefab;
+
     private void Start()
     {
         InitResourcesPanel();
         InitUnitsPanel();
-
+        this.gameObject.GetComponent<SelectionManager>().selectionEvent.AddListener(UpdateCommandPanel);
     }
 
     private void InitResourcesPanel()
@@ -35,15 +40,15 @@ public class UiManager : MonoBehaviour
             resourceTexts.Add(resourcepanel.GetComponentInChildren<TextMeshProUGUI>());
             resourceTexts[i].text = resources[i].Amount.ToString();
             
-            resources[i].HasChanged.AddListener(UpdateUpperBar); //TODO
+            resources[i].HasChanged.AddListener(UpdateResource);
             
             string path = "Materials/UI/Resource/" + resources[i].name;
             Sprite sprite = Resources.Load<Sprite>(path); // can throw error
             resourcepanel.GetComponentInChildren<Image>().sprite = sprite;
             i++;
         }
-        RtsGameManager.GameManager.population.PopulationHasChanged.AddListener(UpdateUpperBar);
-        RtsGameManager.GameManager.population.PopulationLimitHasChanged.AddListener(UpdateUpperBar);
+        RtsGameManager.GameManager.population.PopulationHasChanged.AddListener(UpdatePopulation);
+        RtsGameManager.GameManager.population.PopulationLimitHasChanged.AddListener(UpdatePopulationLimit);
 
         populationText = PopulationPanel.GetComponentInChildren<TextMeshProUGUI>();
         populationText.text = PopulationTextFormatter(RtsGameManager.GameManager.population.ActualPopulation,
@@ -56,40 +61,35 @@ public class UiManager : MonoBehaviour
         return actual.ToString() + "/" + limit.ToString();
     }
 
-    private void UpdateUpperBar() 
+    private void UpdateResource(int amount) 
     {
         for (int i = 0; i < resourceTexts.Count; i++)
         {
-            resourceTexts[i].text = RtsGameManager.GameManager.Resources[i].ToString();
+            resourceTexts[i].text = amount.ToString();
         }
-        populationText.text = PopulationTextFormatter(RtsGameManager.GameManager.population.ActualPopulation,
-            RtsGameManager.GameManager.population.PopulationLimit);
-    }
 
+    }
+    private void UpdatePopulation(int population)
+    {
+        populationText.text = PopulationTextFormatter(population, RtsGameManager.GameManager.population.PopulationLimit);
+
+    }
+    private void UpdatePopulationLimit(int limit)
+    {
+        populationText.text = PopulationTextFormatter(RtsGameManager.GameManager.population.ActualPopulation, limit);
+    }
     private void InitUnitsPanel()
     {
-        this.gameObject.GetComponent<UnitsSelectionManager>().selectionEvent.AddListener(UpdateUnitPanel);
-        _unitPanelPrefab = Resources.Load<GameObject>("UI/UnitPanel");
-        UpdateUnitPanel();
+        this.gameObject.GetComponent<SelectionManager>().selectionEvent.AddListener(UpdateUnitPanel);
     }
-    
-    
-    private void UpdateUnitPanel()
+    private void UpdateUnitPanel(SelectionController sc)
     {
-        var children = new List<GameObject>();
-        foreach (Transform child in UnitPanel.transform) children.Add(child.gameObject);
-        children.ForEach(child => Destroy(child));
-        
-        
-        int length = RtsGameManager.GameManager.SELECTED_UNITS.Count;
-        for (int i = 0; i < length; i++)
-        {
-            GameObject unitPanel = Instantiate(_unitPanelPrefab, UnitPanel.transform);
-            //unitPanel.GetComponent<TextMeshProUGUI>().text = RtsGameManager.GameManager.SELECTED_UNITS[i].gameObject
-               // .GetComponent<UnitController>().;
-        }
+        Debug.Log("UpdateUnitPanel");
     }
-    
+    private void UpdateCommandPanel(SelectionController sc)
+    {
+        Debug.Log("UpdateCommandPanel");
+    }
     
     
     

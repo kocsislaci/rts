@@ -57,7 +57,7 @@ public class CommandExecuter : MonoBehaviour
         while (isExecuting)
         {
             yield return new WaitForSeconds(.1f);
-            if ((targetPos - this.transform.position).magnitude < 0.6f || _navMeshAgent.isPathStale)
+            if ((targetPos - this.transform.position).magnitude < 0.2f || _navMeshAgent.isPathStale)
             {
                 _commands.RemoveAt(0);
                 _navMeshAgent.isStopped = true;
@@ -82,3 +82,5 @@ public class CommandExecuter : MonoBehaviour
 
     }
 }
+
+
