@@ -13,6 +13,7 @@ TagManager:
   - PropertyType
   - PropertyValue
   - MainBuilding
+  - SpawnCenter
   layers:
   - Default
   - TransparentFX
