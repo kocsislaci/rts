@@ -91,10 +91,6 @@ public class UiManager : MonoBehaviour
         Debug.Log("UpdateCommandPanel");
     }
     
-    
-    
-    
-    
     private List<Button> commandButtons = new List<Button>();
     // private Description to show TODO: desc prefab with binding, desc class with
     //                                   corresponding data and funcs to fill prefab

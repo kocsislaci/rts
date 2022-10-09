@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Terrain;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -13,6 +14,8 @@ public class CameraController : MonoBehaviour
     private Camera _camera;
     private Transform _cameraTransform;
     private Mouse _mouse;
+
+    private UnityEngine.Terrain _terrain;
 
     // Horizontal translation
     [SerializeField] private float _maxSpeed = 5f; 
@@ -35,20 +38,15 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] [Range(0f, 0.1f)] private float _edgeTolerance = 0.05f;
 
-    // to update position of the CameraRig
     private Vector3 _targetPosition;
     
-    // to update the height of the MainCamera
     private float _zoomHeight;
 
-    // track and maintain velocity
     private Vector3 _horizontalVelocity;
     private Vector3 _lastPosition;
 
-    // where the mouse dragging starts
     private Vector3 _startDrag;
     
-    // builtin events
     private void Awake()
     {
         _cameraActions = new InputActions();
@@ -56,6 +54,13 @@ public class CameraController : MonoBehaviour
         _cameraTransform = _camera.transform;
         _mouse = Mouse.current;
     }
+
+    private void Start()
+    {
+        _terrain = GameObject.FindWithTag("Terrain").GetComponent<UnityEngine.Terrain>();
+        UpdateBasePosition();
+    }
+
     private void OnEnable()
     {
         _zoomHeight = _cameraTransform.localPosition.y;
@@ -76,11 +81,10 @@ public class CameraController : MonoBehaviour
         _cameraActions.CameraMovementActionMap.Disable();
     }
 
-    // Gameloop
     private void Update()
     {
         GetKeyboardMovement();
-        CheckMouseAtScreenEdge();
+        // CheckMouseAtScreenEdge();
         //DragCamera();
         
         UpdateVelocity();
@@ -88,7 +92,6 @@ public class CameraController : MonoBehaviour
         UpdateCameraPosition();
     }
 
-    // get input for horizontal movement
     private void GetKeyboardMovement()
     {
         Vector3 inputValue = _movement.ReadValue<Vector2>().x * GetCameraRight() +
@@ -100,7 +103,6 @@ public class CameraController : MonoBehaviour
             _targetPosition += inputValue;
         }
     }
-    // movement by mouse on edges
     private void CheckMouseAtScreenEdge()
     {
         Vector2 mousePosition = _mousePosition.ReadValue<Vector2>();
@@ -118,7 +120,6 @@ public class CameraController : MonoBehaviour
 
         _targetPosition += moveDirection;
     }
-    // movement by mouse dragging
     private void DragCamera()
     {
         if (!_mouse.rightButton.isPressed)
@@ -135,7 +136,6 @@ public class CameraController : MonoBehaviour
                 _targetPosition += _startDrag - ray.GetPoint(distance);
         }
     }
-    // movement calculation functions
     private Vector3 GetCameraForward()
     {
         Vector3 forward = _cameraTransform.forward;
@@ -161,14 +161,15 @@ public class CameraController : MonoBehaviour
         {
             _speed = Mathf.Lerp(_speed, _maxSpeed,  _acceleration * Time.deltaTime);
             transform.position += _targetPosition * (_speed * Time.deltaTime);
+            transform.position = new Vector3(transform.position.x ,_terrain.SampleHeight(transform.position), transform.position.z);
             if (transform.position.x < _xMin)
-                transform.position = new Vector3(_xMin, 0f, transform.position.z);
+                transform.position = new Vector3(_xMin, transform.position.y, transform.position.z);
             if (transform.position.x > _xMax)
-                transform.position = new Vector3(_xMax, 0f, transform.position.z);
+                transform.position = new Vector3(_xMax, transform.position.y, transform.position.z);
             if (transform.position.z < _zMin)
-                transform.position = new Vector3(transform.position.x, 0f, _zMin);
+                transform.position = new Vector3(transform.position.x, transform.position.y, _zMin);
             if (transform.position.z > _zMax)
-                transform.position = new Vector3(transform.position.x, 0f, _zMax);
+                transform.position = new Vector3(transform.position.x, transform.position.y, _zMax);
         }
         else
         {
@@ -179,7 +180,6 @@ public class CameraController : MonoBehaviour
         _targetPosition = Vector3.zero;
     }
     
-    // rotation movement functions
     private void RotateCamera(InputAction.CallbackContext obj)
     {
         if (!_mouse.middleButton.isPressed)
@@ -190,7 +190,6 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, nextRotationValue, 0f);
     }
     
-    // zoom functions
     private void ZoomCamera(InputAction.CallbackContext obj)
     {
         float inputValue = -obj.ReadValue<Vector2>().y / 100.0f;
