@@ -51,6 +51,9 @@ Temporary Items
 # Visual Studio cache directory
 .vs/
 
+# Rider cache directory
+.idea/
+
 # Gradle cache directory
 .gradle/
 
