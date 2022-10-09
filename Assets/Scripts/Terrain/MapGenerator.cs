@@ -1,4 +1,3 @@
-using UnityEngine.Serialization;
 
 namespace Terrain
 {
@@ -10,12 +9,14 @@ namespace Terrain
         /// <summary>
         /// Terrain object
         /// </summary>
-        private GameObject _terrain;
+        /// Is loaded from inspector
+        [SerializeField]
+        private GameObject terrain;
         
         /// <summary>
         /// Map generational scripts
         /// </summary>
-        private CreateHeightMap _createHeightMap;
+        private HeightMapGenerator _heightMapGenerator;
         private TerrainMeshGenerator _terrainMeshGenerator;
         private ResourceGenerator _resourceGenerator;
 
@@ -32,25 +33,23 @@ namespace Terrain
         
         private void Init()
         {
-            // Terrain object instantiated
-            _terrain = Instantiate(Resources.Load($"Terrain/Terrain")) as GameObject;
             // Saving references of generational functions
-            if (_terrain == null) return;
-            _createHeightMap = _terrain.GetComponent<CreateHeightMap>();
-            _resourceGenerator = _terrain.GetComponent<ResourceGenerator>();
-            _terrainMeshGenerator = _terrain.GetComponent<TerrainMeshGenerator>();
+            if (terrain == null) return;
+            _heightMapGenerator = terrain.GetComponent<HeightMapGenerator>();
+            _resourceGenerator = terrain.GetComponent<ResourceGenerator>();
+            _terrainMeshGenerator = terrain.GetComponent<TerrainMeshGenerator>();
             //
             
             // For debug purposes
-            generateMapButton.onClick.AddListener(_createHeightMap.onMapGeneration);
+            generateMapButton.onClick.AddListener(_heightMapGenerator.onMapGeneration);
             generateMapButton.onClick.AddListener(_resourceGenerator.ResourceGenerationAction);
             generateMapButton.onClick.AddListener(_terrainMeshGenerator.MapMeshGenerationAction);
             //
         }
         public void ExecuteMapGenerationFunctionalities()
         {
-            if (_terrain == null) return;
-            _createHeightMap.onMapGeneration.Invoke();
+            if (terrain == null) return;
+            _heightMapGenerator.onMapGeneration.Invoke();
             _resourceGenerator.ResourceGenerationAction.Invoke();
             _terrainMeshGenerator.MapMeshGenerationAction.Invoke();
         }

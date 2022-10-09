@@ -114,7 +114,7 @@ TerrainCollider:
   m_Material: {fileID: 0}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 883c37730047f48b0b2d12af4e23a12d, type: 2}
-  m_EnableTreeColliders: 1
+  m_EnableTreeColliders: 0
 --- !u!114 &2042927071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,14 +127,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fead2558e7864af698b72f80d8aefed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areMountainsIncluded: 0
+  isRandom: 0
+  areMountainsIncluded: 1
   numberOfOctaves: 1
   persistence: 1
   lacunarity: 1
   offsetY: 64
   scale: 1
   mountainScale: 1
-  mountainFreq: 5
+  mountainFreq: 1
+  mountainMaxHeight: 10
+  spawnPoints:
+  - {fileID: 1800129718886463150}
+  - {fileID: 378931550348515740}
+  terrain: {fileID: 3353189043279595882}
+  terrainCollider: {fileID: 3353189043279595877}
 --- !u!114 &4219276995600530424
 MonoBehaviour:
   m_ObjectHideFlags: 0

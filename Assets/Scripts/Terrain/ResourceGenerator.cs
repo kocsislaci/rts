@@ -54,9 +54,7 @@ namespace Terrain
             bool[,] isItOccupied = new bool[(int)width, (int)length];
             float offsetX = Random.Range(0, 1000);
             float offsetZ = Random.Range(0, 1000);
-
-
-
+            
             for (int x = 0; x < width; x++)
             {
                 for (int z = 0; z < length; z++)
