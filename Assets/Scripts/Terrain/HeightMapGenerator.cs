@@ -23,6 +23,8 @@ namespace Terrain
         [SerializeField] private bool isSpawnAreaSet;
         [SerializeField] private bool isBlurApplied;
         [SerializeField] private bool isFineNoiseIncluded;
+        [SerializeField] private bool isColored;
+
 
         /// <summary>
         /// Parameters to modify the Perlin noise of the base heightMap
@@ -76,6 +78,18 @@ namespace Terrain
         [Range(1, 30)] [Tooltip("")] [SerializeField] private int blurRadius;
 
 
+        [Header("Terrain texture definition and painting")]
+        [SerializeField] private Color grassColor;
+        [SerializeField] private Color intermediateColor;
+        [SerializeField] private Color highColor;
+        [SerializeField] private Color topColor;
+        [SerializeField] [Range(0, 1)] private float lowThreshold;
+        [SerializeField] [Range(0, 1)] private float intermediateThreshold;
+        [SerializeField] [Range(0, 1)] private float highThreshold;
+        [SerializeField] [Range(0, 1)] private float topThreshold;
+
+
+
         /// <summary>
         /// Saved references to the terrain components
         /// </summary>
@@ -89,6 +103,9 @@ namespace Terrain
         private const int Width = 512; // x
         private const int Height = 128; // y
         private const int Length = 512; // z
+        private Vector2 heightDifference;
+        private const int ResolutionPerBatch = 32;
+         
         
         /// <summary>
         /// Feed for random function
@@ -109,7 +126,7 @@ namespace Terrain
         public UnityAction onMapGeneration;
         private void SetCallbackToEvent()
         {
-            onMapGeneration += GenerateHeightMap;
+            onMapGeneration += GenerateHeightMapCallback;
         }
         private void Awake()
         {
@@ -120,7 +137,7 @@ namespace Terrain
         /// Generates every aspect of the heightMap depending on the debug flags
         /// </summary>
         [ContextMenu("GenerateHeightMap")]
-        private void GenerateHeightMap()
+        private void GenerateHeightMapCallback()
         {
             // Initialize the terrainData
             TerrainData localTerrainData = InitializeTerrainData(terrain.terrainData);
@@ -199,9 +216,17 @@ namespace Terrain
             {
                 heights = CalculateFineNoiseOverTerrain(heights);
             }
-            
             //
             // End of generation pipeline
+
+            // Calculate height difference between the extremities
+            heightDifference = CalculateAbsHeightDifference(heights);
+            
+            // Calculate and apply coloring to the texture
+            if (isColored)
+            {
+                localTerrainData = PaintTextureMap(localTerrainData, heights);
+            }
             
             // Load calculated data to localTerrainData object
             localTerrainData.SetHeights(0, 0, heights);
@@ -219,7 +244,7 @@ namespace Terrain
         private TerrainData InitializeTerrainData(TerrainData terrainData)
         {
             terrainData.size = new Vector3(Width, Height, Length);
-            terrainData.SetDetailResolution(Width, 32);
+            terrainData.SetDetailResolution(Width, ResolutionPerBatch);
             terrainData.baseMapResolution = Width;
             terrainData.heightmapResolution = Width + 1;
             return terrainData;
@@ -406,7 +431,8 @@ namespace Terrain
                                 continue;
                             }
                             var dsq = (xx-z)*(xx-z)+(xz-x)*(xz-x);
-                            var weight = Math.Exp( -dsq / (2*blurRadius*blurRadius) ) / (Math.PI*2*blurRadius*blurRadius);
+                            var weight = Math.Exp(-dsq / (2 * blurRadius * blurRadius)) /
+                                         (Math.PI * 2 * blurRadius * blurRadius);
                             value += heights[xz, xx] * weight;
                             weightSum += weight;
                         }
@@ -442,11 +468,72 @@ namespace Terrain
             }
             return heights;
         }
-        private void PaintTextureMap()
-        {
-            // terrain.
-        }
         //
         // End of generation pipeline functions
+        
+        // Coloring setup
+        //
+        private TerrainData PaintTextureMap(
+            TerrainData terrainData,
+            float[,] heights
+            )
+        {
+            int sizeX = Width/* * ResolutionPerBatch*/;
+            int sizeZ = Length/* * ResolutionPerBatch*/;
+            int size = sizeX * sizeZ;
+            
+            Color[] colors = new Color[size];
+            for (var x = 0; x < sizeX; x++)
+            {
+                for (var z = 0; z < sizeZ; z++)
+                {
+                    colors[x * sizeX + z] = InterpolatedColor(heights[x, z]);
+                }
+            }
+
+            Texture2D texture2DCustom = new Texture2D(sizeX, sizeZ);
+            texture2DCustom.SetPixels(colors);
+            texture2DCustom.Apply();
+
+            TerrainLayer terrainLayer = new TerrainLayer();
+            terrainLayer.diffuseTexture = texture2DCustom;
+            terrainLayer.tileSize = new Vector2(sizeX, sizeZ);
+            terrainData.SetTerrainLayersRegisterUndo(new[] { terrainLayer }, "undo");
+            
+            return terrainData;
+        }
+        private Color InterpolatedColor(float height)
+        {
+            var dimensionLessHeight = height;
+            if (dimensionLessHeight > topThreshold)
+                return topColor;
+            if (dimensionLessHeight > highThreshold)
+                return Color.Lerp(highColor, topColor, (dimensionLessHeight - highThreshold) / (topThreshold - highThreshold));
+            if (dimensionLessHeight > intermediateThreshold)
+                return Color.Lerp(intermediateColor, highColor, (dimensionLessHeight - intermediateThreshold) / (highThreshold - intermediateThreshold));
+            if (dimensionLessHeight > lowThreshold)
+                return Color.Lerp(grassColor, intermediateColor, (dimensionLessHeight - lowThreshold) / (intermediateThreshold - lowThreshold));
+            return grassColor;
+        }
+        private Vector2 CalculateAbsHeightDifference(float[,] heights)
+        {
+            float yMax = baseOffsetY;
+            float yMin = baseOffsetY;
+
+            for (int x = 0; x < Width; x++)
+            {
+                for (int z = 0; z < Length; z++)
+                {
+                    var actual = heights[x, z];
+                    if (yMax < actual)
+                        yMax = actual;
+                    if (yMin > actual)
+                        yMin = actual;
+                }
+            }
+            return new Vector2(yMin, yMax);
+        }
+        //
+        // End of Coloring setup
     }
 }

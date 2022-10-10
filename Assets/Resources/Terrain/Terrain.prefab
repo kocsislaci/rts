@@ -92,11 +92,11 @@ Terrain:
   m_ShadowCastingMode: 2
   m_DrawHeightmap: 1
   m_DrawInstanced: 0
-  m_DrawTreesAndFoliage: 1
+  m_DrawTreesAndFoliage: 0
   m_StaticShadowCaster: 0
   m_ReflectionProbeUsage: 1
   m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
-  m_BakeLightProbesForTrees: 1
+  m_BakeLightProbesForTrees: 0
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
   m_ScaleInLightmap: 0.0256
@@ -128,18 +128,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRandom: 0
-  areMountainsIncluded: 1
-  numberOfOctaves: 1
-  persistence: 1
-  lacunarity: 1
-  offsetY: 64
-  scale: 1
-  mountainScale: 1
-  mountainFreq: 1
+  isBaseMapCalculated: 1
+  areMountainsIncluded: 0
+  areLoneMountainsIncluded: 1
+  isSpawnAreaSet: 1
+  isBlurApplied: 1
+  isFineNoiseIncluded: 1
+  isColored: 1
+  baseNumberOfOctaves: 1
+  basePersistence: 1
+  baseLacunarity: 1
+  baseOffsetY: 64
+  baseScale: 1
+  mountainWidth: 0.1
+  mountainLevel: 0.5
+  mountainNoiseScale: 1.5
+  mountainNoiseFreq: 3
   mountainMaxHeight: 10
+  isRedistributedMountain: 0
+  redistributionExponentMountain: 0
+  loneMountainLevel: 0.6
+  loneMountainNoiseScale: 4
+  loneMountainNoiseFreq: 3
+  loneMountainMaxHeight: 50
+  isRedistributedLoneMountain: 1
+  redistributionExponentLoneMountain: 7.65
+  radiusOfSpawnArea: 80
   spawnPoints:
   - {fileID: 1800129718886463150}
   - {fileID: 378931550348515740}
+  fineNoiseNumberOfOctaves: 7
+  fineNoisePersistence: 0.8
+  fineNoiseLacunarity: 0.9
+  fineNoiseScale: 4
+  fineNoiseHeight: 0.4
+  blurRadius: 4
+  grassColor: {r: 0.2784314, g: 0.57254905, b: 0.32941177, a: 0.5019608}
+  intermediateColor: {r: 0.22229628, g: 0.4339623, b: 0.055268783, a: 0.5019608}
+  highColor: {r: 0.3490566, g: 0.3024735, b: 0.12019401, a: 0.5019608}
+  topColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 0.5019608}
+  lowThreshold: 0.2
+  intermediateThreshold: 0.45
+  highThreshold: 0.65
+  topThreshold: 0.9
   terrain: {fileID: 3353189043279595882}
   terrainCollider: {fileID: 3353189043279595877}
 --- !u!114 &4219276995600530424
@@ -154,10 +185,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1691857eef1f4d53b9bfb4b20165b434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  terrain: {fileID: 3353189043279595882}
   treePrefab: {fileID: 826394623011375923, guid: 8110c64cd5d7f42f19ad8a0c2f6d57a5, type: 3}
   stonePrefab: {fileID: 1778523828082890200, guid: 119df1a8c1584404aa0ecadc52c57fc3, type: 3}
   goldPrefab: {fileID: 6566749939894645762, guid: f6d212912f7334133ab6326bc512654f, type: 3}
   scale: 5
+  radiusOfSpawnArea: 0
+  spawnCenters:
+  - {fileID: 1216095892700173275}
+  - {fileID: 5254383781345113842}
   ratioOfTrees: 0.3
   chanceOfTree: 0.1
   ratioOfStone: 0.02
@@ -176,6 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e569eace211f74213931ae3b37dc0fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navMeshSurface: {fileID: 8595008658834183117}
+  intervalToUpdateMesh: 0
 --- !u!114 &8595008658834183117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,9 +237,9 @@ MonoBehaviour:
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
+  m_OverrideTileSize: 1
+  m_TileSize: 32
+  m_OverrideVoxelSize: 1
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
