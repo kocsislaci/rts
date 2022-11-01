@@ -24,8 +24,7 @@ namespace Terrain
         [SerializeField] private bool isBlurApplied;
         [SerializeField] private bool isFineNoiseIncluded;
         [SerializeField] private bool isColored;
-
-
+        
         /// <summary>
         /// Parameters to modify the Perlin noise of the base heightMap
         /// </summary>
@@ -59,7 +58,6 @@ namespace Terrain
         [SerializeField] private bool isRedistributedLoneMountain;
         [SerializeField] [Range(0.01f, 10)] private float redistributionExponentLoneMountain;
         
-
         /// <summary>
         /// There is two predefined spawnPoint on the map, where the two players will start
         /// </summary>
@@ -87,9 +85,7 @@ namespace Terrain
         [SerializeField] [Range(0, 1)] private float intermediateThreshold;
         [SerializeField] [Range(0, 1)] private float highThreshold;
         [SerializeField] [Range(0, 1)] private float topThreshold;
-
-
-
+        
         /// <summary>
         /// Saved references to the terrain components
         /// </summary>
@@ -103,9 +99,8 @@ namespace Terrain
         private const int Width = 512; // x
         private const int Height = 128; // y
         private const int Length = 512; // z
-        private Vector2 heightDifference;
+        // private Vector2 heightDifference;
         private const int ResolutionPerBatch = 32;
-         
         
         /// <summary>
         /// Feed for random function
@@ -123,10 +118,10 @@ namespace Terrain
         /// <summary>
         /// Action which can be invoked from the outside to trigger callbacks
         /// </summary>
-        public UnityAction onMapGeneration;
+        public UnityAction OnMapGeneration;
         private void SetCallbackToEvent()
         {
-            onMapGeneration += GenerateHeightMapCallback;
+            OnMapGeneration += GenerateHeightMapCallback;
         }
         private void Awake()
         {
@@ -220,7 +215,7 @@ namespace Terrain
             // End of generation pipeline
 
             // Calculate height difference between the extremities
-            heightDifference = CalculateAbsHeightDifference(heights);
+            // heightDifference = CalculateAbsHeightDifference(heights);
             
             // Calculate and apply coloring to the texture
             if (isColored)
@@ -495,9 +490,11 @@ namespace Terrain
             texture2DCustom.SetPixels(colors);
             texture2DCustom.Apply();
 
-            TerrainLayer terrainLayer = new TerrainLayer();
-            terrainLayer.diffuseTexture = texture2DCustom;
-            terrainLayer.tileSize = new Vector2(sizeX, sizeZ);
+            TerrainLayer terrainLayer = new TerrainLayer
+            {
+                diffuseTexture = texture2DCustom,
+                tileSize = new Vector2(sizeX, sizeZ)
+            };
             terrainData.SetTerrainLayersRegisterUndo(new[] { terrainLayer }, "undo");
             
             return terrainData;
@@ -515,7 +512,7 @@ namespace Terrain
                 return Color.Lerp(grassColor, intermediateColor, (dimensionLessHeight - lowThreshold) / (intermediateThreshold - lowThreshold));
             return grassColor;
         }
-        private Vector2 CalculateAbsHeightDifference(float[,] heights)
+        /*private Vector2 CalculateAbsHeightDifference(float[,] heights)
         {
             float yMax = baseOffsetY;
             float yMin = baseOffsetY;
@@ -532,7 +529,7 @@ namespace Terrain
                 }
             }
             return new Vector2(yMin, yMax);
-        }
+        }*/
         //
         // End of Coloring setup
     }

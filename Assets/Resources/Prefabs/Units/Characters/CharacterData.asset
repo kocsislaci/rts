@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6806969553594dccb35bf8fe7b8b4655, type: 3}
+  m_Name: CharacterData
+  m_EditorClassIdentifier: 
+  name: Character
+  fieldOfView: 5
+  maxHealth: 10
+  defense: 0
+  resourcesCost:
+  - type: 0
+    amount: 5
+  skills:
+  - {fileID: 11400000, guid: 0c0d72989ac92463284d05f2b9340afd, type: 2}
+  prefab: {fileID: 5747093355480815041, guid: cc4a5b4d1030d4fc384ef798bc23f080, type: 3}
+  speed: 5
+  gatherSpeed: 1
+  maxLoad: 2
+  buildSpeed: 1
+  attackDamage: 1
+  attackSpeed: 1
+  attackRange: 1
+  populationCost: 1
+  dummy: 0

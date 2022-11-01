@@ -8,7 +8,7 @@ namespace GameManagers
     {
         private InputActions _cameraActions;
         private InputAction _movement;
-        private InputAction _mousePosition;
+        // private InputAction _mousePosition;
         private Camera _camera;
         private Transform _cameraTransform;
         private Mouse _mouse;
@@ -19,11 +19,12 @@ namespace GameManagers
         [SerializeField] private float maxSpeed = 5f; 
         private float _speed;
         [SerializeField] private float acceleration = 10f;
-        [SerializeField] private float damping = 15f;    
-        private float _xMax = 1000f;
-        private float _xMin = 0f;
-        private float _zMax = 1000f;
-        private float _zMin = 0f;
+        [SerializeField] private float damping = 15f;
+        private const float XMax = 512;
+        private const float XMin = 0f;
+        private const float ZMax = 512;
+        private const float ZMin = 0f;
+
         // Vertical translation
         [SerializeField] private float stepSize = 2f;
         [SerializeField] private float zoomDampening = 7.5f;
@@ -34,7 +35,7 @@ namespace GameManagers
         // Rotation
         [SerializeField] private float maxRotationSpeed = 2f;
 
-        [SerializeField] [Range(0f, 0.1f)] private float edgeTolerance = 0.05f;
+        // [SerializeField] [Range(0f, 0.1f)] private float edgeTolerance = 0.05f;
 
         private Vector3 _targetPosition;
     
@@ -45,6 +46,16 @@ namespace GameManagers
 
         private Vector3 _startDrag;
     
+        public void SetStartPosition(Vector3 position)
+        {
+            this.transform.position = position;
+            
+            _zoomHeight = _cameraTransform.localPosition.y;
+            _cameraTransform.LookAt(this.transform);
+
+            _lastPosition = this.transform.position;
+        }
+        
         private void Awake()
         {
             _terrain = GameObject.FindWithTag("Terrain").GetComponent<UnityEngine.Terrain>();
@@ -54,7 +65,6 @@ namespace GameManagers
             _cameraTransform = _camera.transform;
             _mouse = Mouse.current;
             
-            _targetPosition = Vector3.forward;
             UpdateVelocity();
             UpdateBasePosition();
             UpdateCameraPosition();
@@ -68,7 +78,7 @@ namespace GameManagers
             _lastPosition = this.transform.position;
 
             _movement = _cameraActions.CameraMovementActionMap.MoveCamera;
-            _mousePosition = _cameraActions.CameraMovementActionMap.MousePosition;
+            // _mousePosition = _cameraActions.CameraMovementActionMap.MousePosition;
             _cameraActions.CameraMovementActionMap.RotateCamera.performed += RotateCamera;
             _cameraActions.CameraMovementActionMap.ZoomCamera.performed += ZoomCamera;
             _cameraActions.CameraMovementActionMap.Enable();
@@ -102,7 +112,7 @@ namespace GameManagers
                 _targetPosition += inputValue;
             }
         }
-        private void CheckMouseAtScreenEdge()
+        /*private void CheckMouseAtScreenEdge()
         {
             Vector2 mousePosition = _mousePosition.ReadValue<Vector2>();
             Vector3 moveDirection = Vector3.zero;
@@ -118,8 +128,8 @@ namespace GameManagers
                 moveDirection += GetCameraForward();
 
             _targetPosition += moveDirection;
-        }
-        private void DragCamera()
+        }*/
+        /*private void DragCamera()
         {
             if (!_mouse.rightButton.isPressed)
                 return;
@@ -134,7 +144,7 @@ namespace GameManagers
                 else
                     _targetPosition += _startDrag - ray.GetPoint(distance);
             }
-        }
+        }*/
         private Vector3 GetCameraForward()
         {
             Vector3 forward = _cameraTransform.forward;
@@ -161,14 +171,14 @@ namespace GameManagers
                 _speed = Mathf.Lerp(_speed, maxSpeed,  acceleration * Time.deltaTime);
                 transform.position += _targetPosition * (_speed * Time.deltaTime);
                 transform.position = new Vector3(transform.position.x ,_terrain.SampleHeight(transform.position), transform.position.z);
-                if (transform.position.x < _xMin)
-                    transform.position = new Vector3(_xMin, transform.position.y, transform.position.z);
-                if (transform.position.x > _xMax)
-                    transform.position = new Vector3(_xMax, transform.position.y, transform.position.z);
-                if (transform.position.z < _zMin)
-                    transform.position = new Vector3(transform.position.x, transform.position.y, _zMin);
-                if (transform.position.z > _zMax)
-                    transform.position = new Vector3(transform.position.x, transform.position.y, _zMax);
+                if (transform.position.x < XMin)
+                    transform.position = new Vector3(XMin, transform.position.y, transform.position.z);
+                if (transform.position.x > XMax)
+                    transform.position = new Vector3(XMax, transform.position.y, transform.position.z);
+                if (transform.position.z < ZMin)
+                    transform.position = new Vector3(transform.position.x, transform.position.y, ZMin);
+                if (transform.position.z > ZMax)
+                    transform.position = new Vector3(transform.position.x, transform.position.y, ZMax);
             }
             else
             {

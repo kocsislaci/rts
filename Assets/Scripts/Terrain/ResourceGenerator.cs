@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
+using TerrainObject.ResourceObject;
+using Unit.ResourceObject;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Terrain
 {
@@ -13,14 +13,14 @@ namespace Terrain
     {
         [SerializeField] private Terrain terrain;
         
-        [Header("Stored prefabs to instantiate")]
-        [SerializeField] private GameObject treePrefab;
-        [SerializeField] private GameObject stonePrefab;
-        [SerializeField] private GameObject goldPrefab;
+        // [Header("Stored prefabs to instantiate")]
+        // [SerializeField] private GameObject treePrefab;
+        // [SerializeField] private GameObject stonePrefab;
+        // [SerializeField] private GameObject goldPrefab;
         
-        private readonly List<GameObject> _generatedTrees = new();
-        private readonly List<GameObject> _generatedStones = new();
-        private readonly List<GameObject> _generatedGold = new();
+        private readonly List<WoodResource> _generatedTrees = new();
+        private readonly List<StoneResource> _generatedStones = new();
+        private readonly List<GoldResource> _generatedGold = new();
         
         [Header("Noise parameter")]
         [SerializeField] [Range(1, 100)] private float scale;
@@ -116,9 +116,9 @@ namespace Terrain
         [ContextMenu("Delete resources")]
         private void DeleteResources()
         {
-            _generatedTrees.ForEach(Destroy);
-            _generatedStones.ForEach(Destroy);
-            _generatedGold.ForEach(Destroy);
+            _generatedTrees.Clear();
+            _generatedStones.Clear();
+            _generatedGold.Clear();
         }
 
         private bool[,] SpawnAreaTakenIntoAccount(bool[,] isItOccupied)
@@ -156,17 +156,27 @@ namespace Terrain
                     if (noiseFloat < ratioOfGold && Random.Range(0.0f, 1.0f) <= chanceOfGold)
                     {
                         isItOccupied[x, z] = true;
-                        _generatedGold.Add(Instantiate<GameObject>(
-                            goldPrefab,
+                        var gold = new GoldResource(
                             new Vector3(
                                 x,
                                 terrain.SampleHeight(new Vector3(
                                     x,
                                     0,
                                     z)),
-                                z),
-                            new Quaternion()
-                        ));
+                                z)
+                        );
+                        _generatedGold.Add(gold);
+                        // _generatedGold.Add(Instantiate<GameObject>(
+                        //     goldPrefab,
+                        //     new Vector3(
+                        //         x,
+                        //         terrain.SampleHeight(new Vector3(
+                        //             x,
+                        //             0,
+                        //             z)),
+                        //         z),
+                        //     new Quaternion()
+                        // ));
                     }
                 }
             }
@@ -187,17 +197,27 @@ namespace Terrain
                     if (noiseFloat > (1.0f - ratioOfStone) && Random.Range(0.0f, 1.0f) <= chanceOfStone)
                     {
                         isItOccupied[x, z] = true;
-                        _generatedStones.Add(Instantiate(
-                            stonePrefab,
+                        var stone = new StoneResource(
                             new Vector3(
                                 x,
                                 terrain.SampleHeight(new Vector3(
                                     x,
                                     0,
                                     z)),
-                                z),
-                            new Quaternion()
-                        ));
+                                z)
+                        );
+                        _generatedStones.Add(stone);
+                        // _generatedStones.Add(Instantiate(
+                        //     stonePrefab,
+                        //     new Vector3(
+                        //         x,
+                        //         terrain.SampleHeight(new Vector3(
+                        //             x,
+                        //             0,
+                        //             z)),
+                        //         z),
+                        //     new Quaternion()
+                        // ));
                     }
                 }
             }
@@ -218,17 +238,27 @@ namespace Terrain
                     if (noiseFloat < ratioOfTrees && Random.Range(0.0f, 1.0f) <= chanceOfTree)
                     {
                         isItOccupied[x, z] = true;
-                        _generatedTrees.Add(Instantiate(
-                            treePrefab,
+                        var wood = new WoodResource(
                             new Vector3(
                                 x,
                                 terrain.SampleHeight(new Vector3(
                                     x,
                                     0,
                                     z)),
-                                z),
-                            new Quaternion()
-                        ));
+                                z)
+                        );
+                        _generatedTrees.Add(wood);
+                        // _generatedTrees.Add(Instantiate(
+                        //     treePrefab,
+                        //     new Vector3(
+                        //         x,
+                        //         terrain.SampleHeight(new Vector3(
+                        //             x,
+                        //             0,
+                        //             z)),
+                        //         z),
+                        //     new Quaternion()
+                        // ));
                     }
                 }
             }

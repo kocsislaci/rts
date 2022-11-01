@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f512102167410f820be583f8f79a30, type: 3}
+  m_Name: MainBuildingData
+  m_EditorClassIdentifier: 
+  name: MainBuilding
+  fieldOfView: 5
+  maxHealth: 30
+  defense: 0
+  resourcesCost:
+  - type: 1
+    amount: 10
+  - type: 2
+    amount: 10
+  skills:
+  - {fileID: 11400000, guid: 0a7464d75fedf45f383d2d56b2ffce11, type: 2}
+  prefab: {fileID: 4113707490336698779, guid: d9a97943436a14500b2810d1f9ab6a69, type: 3}
+  populationGain: 10
+  dummy: 0

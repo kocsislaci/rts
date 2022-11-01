@@ -20,16 +20,16 @@ namespace Terrain
         /// <summary>
         /// Action which can be invoked from the outside to trigger callbacks
         /// </summary>
-        public UnityAction onNavMeshUpdate;
+        public UnityAction OnNavMeshUpdate;
         private void SetCallbackToOnMapMeshGenerationEvent()
         {
-            onNavMeshUpdate += UpdateNavMeshCallback;
+            OnNavMeshUpdate += UpdateNavMeshCallback;
         }
 
-        public UnityAction onNavMeshBuild;
+        public UnityAction OnNavMeshBuild;
         private void SetCallbackToOnNavMeshBuildEvent()
         {
-            onNavMeshBuild += InitNavMesh;
+            OnNavMeshBuild += InitNavMesh;
         }
         
         private void Awake()
