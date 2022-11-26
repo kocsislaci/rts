@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CharacterData
   m_EditorClassIdentifier: 
   name: Character
-  fieldOfView: 5
+  fieldOfView: 10
   maxHealth: 10
   defense: 0
   resourcesCost:
@@ -21,13 +21,16 @@ MonoBehaviour:
     amount: 5
   skills:
   - {fileID: 11400000, guid: 0c0d72989ac92463284d05f2b9340afd, type: 2}
+  - {fileID: 11400000, guid: 8e405658dba214077bda2061fb1c0330, type: 2}
   prefab: {fileID: 5747093355480815041, guid: cc4a5b4d1030d4fc384ef798bc23f080, type: 3}
   speed: 5
   gatherSpeed: 1
   maxLoad: 2
-  buildSpeed: 1
-  attackDamage: 1
+  buildingUnit: 1
+  buildingSpeed: 1
+  attackDamage: 2
   attackSpeed: 1
   attackRange: 1
   populationCost: 1
+  timeToTrain: 3
   dummy: 0

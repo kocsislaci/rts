@@ -1,13 +1,15 @@
+using System.Collections.Generic;
 using GameManagers;
 using GameManagers.Resources;
+using Unit.ResourceObject;
 using UnityEngine;
 
 namespace Unit.Character
 {
     public class Character: Unit
     {
-        protected int currentLoad;
-        public int CurrentLoad
+        protected ResourceValue currentLoad;
+        public ResourceValue CurrentLoad
         {
             get
             {
@@ -18,45 +20,44 @@ namespace Unit.Character
                 currentLoad = value;
             }
         }
-        
-        /// <summary>
-        /// Constructor
-        /// 
-        /// Responsible to
-        /// - initialize the fields,
-        /// - save reference to global scope,
-        /// - instantiate the gameObject.
-        /// </summary>
-        /// <param name="owner"> Sets the owner of the object </param>
-        /// <param name="startPosition"> Sets the start position of the object</param>
-        public Character(TeamEnum owner, Vector3 startPosition) : base(owner, startPosition)
+        public override int CurrentHealth
         {
+            get { return currentHealth; }
+            set
+            {
+                currentHealth = value;
+                if (currentHealth < 1)
+                {
+                    GameManager.CHARACTERS.Remove(this);
+                }
+            }
+        }
+        
+        
+        public Character(Team owner, Vector3 startPosition) : base(owner, startPosition)
+        {
+            unitType = UnitType.Character;
+            
             // - initialize the fields
-            data = Resources.Load<CharacterData>(GameManager.PathToLoadData[WhatToLoadEnum.Character]);
-            Owner = owner;
+            data = Resources.Load<CharacterData>(GameManager.PathToLoadData[UnitType.Character]);
             CurrentHealth = data.maxHealth;
-            CurrentLoad = 0;
+            CurrentLoad = new ResourceValue(ResourceType.Gold, 0);
             
             // - save reference to global scope
             GameManager.CHARACTERS.Add(this);
             
-            //
+            // Population
             GameManager.Population.ActualPopulation += ((CharacterData)data).populationCost;
-            
-            
+
             // - instantiate the gameObject.
-            itself = Object.Instantiate(data.prefab, startPosition, Quaternion.identity);
-            controller = itself.GetComponent<CharacterController>();
+            sceneGameObject = Object.Instantiate(data.prefab, startPosition, Quaternion.identity);
+            controller = sceneGameObject.GetComponent<CharacterController>();
             controller.InitialiseGameObject(owner, this);
-            // take care of the controller initialization
-
+            InitializeSkillControllers();
         }
-
         ~Character()
         {
             GameManager.Population.ActualPopulation -= ((CharacterData)data).populationCost;
         }
-
-        // attack, gather, unload, build, move, receiveDamage, die
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using TerrainObject.ResourceObject;
+using GameManagers;
 using Unit.ResourceObject;
+using Unit.ResourceObject.ImplementedResources;
 using UnityEngine.Events;
 
 namespace Terrain
@@ -12,16 +13,7 @@ namespace Terrain
     public class ResourceGenerator : MonoBehaviour
     {
         [SerializeField] private Terrain terrain;
-        
-        // [Header("Stored prefabs to instantiate")]
-        // [SerializeField] private GameObject treePrefab;
-        // [SerializeField] private GameObject stonePrefab;
-        // [SerializeField] private GameObject goldPrefab;
-        
-        private readonly List<WoodResource> _generatedTrees = new();
-        private readonly List<StoneResource> _generatedStones = new();
-        private readonly List<GoldResource> _generatedGold = new();
-        
+
         [Header("Noise parameter")]
         [SerializeField] [Range(1, 100)] private float scale;
         [SerializeField] private bool isRandom;
@@ -116,9 +108,9 @@ namespace Terrain
         [ContextMenu("Delete resources")]
         private void DeleteResources()
         {
-            _generatedTrees.Clear();
-            _generatedStones.Clear();
-            _generatedGold.Clear();
+            GameManager.WOOD_RESOURCES.Clear();
+            GameManager.STONE_RESOURCES.Clear();
+            GameManager.GOLD_RESOURCES.Clear();
         }
 
         private bool[,] SpawnAreaTakenIntoAccount(bool[,] isItOccupied)
@@ -165,18 +157,7 @@ namespace Terrain
                                     z)),
                                 z)
                         );
-                        _generatedGold.Add(gold);
-                        // _generatedGold.Add(Instantiate<GameObject>(
-                        //     goldPrefab,
-                        //     new Vector3(
-                        //         x,
-                        //         terrain.SampleHeight(new Vector3(
-                        //             x,
-                        //             0,
-                        //             z)),
-                        //         z),
-                        //     new Quaternion()
-                        // ));
+                        GameManager.GOLD_RESOURCES.Add(gold);
                     }
                 }
             }
@@ -206,18 +187,7 @@ namespace Terrain
                                     z)),
                                 z)
                         );
-                        _generatedStones.Add(stone);
-                        // _generatedStones.Add(Instantiate(
-                        //     stonePrefab,
-                        //     new Vector3(
-                        //         x,
-                        //         terrain.SampleHeight(new Vector3(
-                        //             x,
-                        //             0,
-                        //             z)),
-                        //         z),
-                        //     new Quaternion()
-                        // ));
+                        GameManager.STONE_RESOURCES.Add(stone);
                     }
                 }
             }
@@ -247,18 +217,7 @@ namespace Terrain
                                     z)),
                                 z)
                         );
-                        _generatedTrees.Add(wood);
-                        // _generatedTrees.Add(Instantiate(
-                        //     treePrefab,
-                        //     new Vector3(
-                        //         x,
-                        //         terrain.SampleHeight(new Vector3(
-                        //             x,
-                        //             0,
-                        //             z)),
-                        //         z),
-                        //     new Quaternion()
-                        // ));
+                        GameManager.WOOD_RESOURCES.Add(wood);
                     }
                 }
             }

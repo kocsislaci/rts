@@ -7,7 +7,7 @@ namespace Unit.ResourceObject
     public class ResourceData : ScriptableObject
     {
         [SerializeField] public ResourceType type;
-        [SerializeField] public int amount;
+        [SerializeField] public int maxAmount;
         
         [Header("In game object")]
         [SerializeField] public GameObject prefab;

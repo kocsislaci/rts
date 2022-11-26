@@ -1,51 +1,48 @@
 using System.Collections.Generic;
 using Unit.Skill;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Unit
 {
     public abstract class Unit
     {
-        /*
-         * Reference to itself in the game scene
-         */
-        protected GameObject itself;
-        protected UnitController controller;
-
-        /*
-         * Preloaded data
-         */
+        public GUID uuid;
+        public GameObject sceneGameObject;
+        public UnitController controller;
         public UnitData data;
-
-        /*
-         * Static data
-         */
-        protected TeamEnum owner;
-        public TeamEnum Owner
+        public UnitType unitType;
+        protected Team owner;
+        public Team Owner
         {
             get => owner;
             set { owner = value; }
         }
-
-        /*
-         * Variable data
-         */
         protected int currentHealth;
-        public int CurrentHealth
+        public virtual int CurrentHealth
         {
             get { return currentHealth; }
-            set { currentHealth = value; }
+            set
+            {
+                currentHealth = value;
+            }
         }
+        
 
         protected List<SkillController> skillControllers;
         public List<SkillController> SkillControllers { get => skillControllers; }
 
         
-        protected Unit(TeamEnum owner, Vector3 startPosition)
+        protected Unit(Team owner, Vector3 startPosition)
         {
-            
+            Owner = owner;
+            uuid = GUID.Generate();
         }
+        ~Unit()
+        {
+            Object.Destroy(sceneGameObject);
+        }
+        
         
         protected void InitializeSkillControllers()
         {
@@ -53,19 +50,14 @@ namespace Unit
             SkillController skillController;
             foreach (SkillData skill in data.skills)
             {
-                skillController = itself.AddComponent<SkillController>();
-                skillController.Initialize(skill, itself);
+                skillController = sceneGameObject.AddComponent<SkillController>();
+                skillController.Initialize(skill, sceneGameObject);
                 skillControllers.Add(skillController);
             }
         }
-        
         public void TriggerSkill(int index, GameObject target = null)
         {
             skillControllers[index].Trigger(target);
-        }
-        ~Unit()
-        {
-            Object.Destroy(itself);
         }
     }
 }

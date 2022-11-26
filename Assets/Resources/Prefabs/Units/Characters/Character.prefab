@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4974251699242273087}
   - component: {fileID: 4374116328957841060}
   - component: {fileID: 5509490706270432731}
-  m_Layer: 7
+  m_Layer: 13
   m_Name: Mesh
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,9 +94,9 @@ GameObject:
   - component: {fileID: 6277571072095894745}
   - component: {fileID: 5066178850203658268}
   - component: {fileID: 3029597651658332015}
-  m_Layer: 7
+  m_Layer: 13
   m_Name: TeamIndicator
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,11 +178,11 @@ GameObject:
   - component: {fileID: 8075789400671651019}
   - component: {fileID: 979341457339258305}
   - component: {fileID: 1799677258067415446}
-  - component: {fileID: 3002380187336307414}
   - component: {fileID: 1412431820}
-  m_Layer: 7
+  - component: {fileID: 7964119166388588011}
+  m_Layer: 13
   m_Name: Character
-  m_TagString: Unit
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -218,7 +218,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -246,35 +246,18 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 6
-  m_Acceleration: 6
+  m_Speed: 5
+  m_Acceleration: 10
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 360
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
---- !u!114 &3002380187336307414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5747093355480815041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1724fb38834b04a5eac603ff320e172c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectionCircle: {fileID: 8889317944182518771}
-  healthBarCanvas: {fileID: 0}
-  healthBarPrefab: {fileID: 5099601725015678127, guid: 3f525c66b3610441ba4aa5576b53c827, type: 3}
-  unitListPanel: {fileID: 0}
-  iconPrefab: {fileID: 3403114756973916956, guid: d48d4480154624969818ce31905d0632, type: 3}
 --- !u!114 &1412431820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,8 +270,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0137d5763a641a6b33c8b7577ebb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionCircle: {fileID: 8889317944182518771}
   teamIndicator: {fileID: 4893482938120744115}
+  healthBarCanvas: {fileID: 0}
+  healthBarPrefab: {fileID: 5099601725015678127, guid: 3f525c66b3610441ba4aa5576b53c827, type: 3}
+  isSelected: 0
   agent: {fileID: 1799677258067415446}
+--- !u!114 &7964119166388588011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5747093355480815041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa366b7e3a8d4d7ea1aa872fbc0c45c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8576767775452921998
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 140435187577791422}
   - component: {fileID: 6463217242541637805}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -345,7 +344,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8588660003178711436}
   - component: {fileID: 4089830308457766079}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SelectionCircle
   m_TagString: Selection
   m_Icon: {fileID: 0}

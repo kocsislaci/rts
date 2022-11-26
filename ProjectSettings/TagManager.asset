@@ -16,6 +16,7 @@ TagManager:
   - SpawnCenter
   - HealtbarCanvas
   - UI
+  - Character
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - Resource
   - Obstacle
   - Spawnpoint
-  - 
+  - Character
   - 
   - 
   - 

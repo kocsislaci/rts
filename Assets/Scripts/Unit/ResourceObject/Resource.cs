@@ -1,10 +1,6 @@
-using GameManagers;
-using GameManagers.Resources;
-using Unit.ResourceObject;
-using UnityEditor;
 using UnityEngine;
 
-namespace TerrainObject.ResourceObject
+namespace Unit.ResourceObject
 {
     public abstract class Resource
     {

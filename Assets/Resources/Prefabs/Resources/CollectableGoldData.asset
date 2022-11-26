@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CollectableGoldData
   m_EditorClassIdentifier: 
   type: 0
-  amount: 10
+  maxAmount: 10
   prefab: {fileID: 6566749939894645762, guid: f6d212912f7334133ab6326bc512654f, type: 3}

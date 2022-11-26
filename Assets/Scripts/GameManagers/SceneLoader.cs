@@ -30,7 +30,7 @@ namespace GameManagers
             // set camera
             cameraRig.SetStartPosition(mapManager.SampleHeightFromWorldPosition(blueSpawnPoint.transform.position));
 
-            // TODO put starter building and some units
+            // Put some units for the player and set owner color
             LoadStarterBuildingAndUnits();
         }
 
@@ -43,9 +43,19 @@ namespace GameManagers
 
         private void LoadStarterBuildingAndUnits()
         {
+            /*
+             * Set self color in GameManager
+             */
+            GameManager.MyTeam = Team.Blue;
 
-            new Building(TeamEnum.Blue, mapManager.SampleHeightFromWorldPosition(blueSpawnPoint.transform.position));
+            /*
+             * Adding 1 MainBuilding
+             */
+            new Building(Team.Blue, mapManager.SampleHeightFromWorldPosition(blueSpawnPoint.transform.position), true);
             
+            /*
+             * Adding 3 characters
+             */
             var positions = new List<Vector3>
             {
                 mapManager.SampleHeightFromWorldPosition(blueSpawnPoint.transform.position + Vector3.back * 10f),
@@ -54,8 +64,13 @@ namespace GameManagers
             };
             foreach (var position in positions)
             {
-                new Character(TeamEnum.Blue, position);
+                new Character(Team.Blue, position);
             }
+            
+            
+            // one other team unit
+            var pos = mapManager.SampleHeightFromWorldPosition(blueSpawnPoint.transform.position + Vector3.back * 12f + Vector3.left * 4f);
+            new Character(Team.Red, pos);
         }
     }
 }

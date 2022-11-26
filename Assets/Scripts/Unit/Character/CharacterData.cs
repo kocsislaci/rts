@@ -13,17 +13,19 @@ namespace Unit.Character
         [Header("Gathering")]
         [SerializeField] public int gatherSpeed;
         [SerializeField] public int maxLoad;
-        
+
         [Header("Building")]
-        [SerializeField] public int buildSpeed;
+        [SerializeField] public int buildingUnit;
+        [SerializeField] public int buildingSpeed;
 
         [Header("Fighting")]
         [SerializeField] public int attackDamage;
         [SerializeField] public int attackSpeed;
-        [SerializeField] public int attackRange;
+        [SerializeField] public int attackRange; // range overall TODO
 
         [Header("Costs")]
         [SerializeField] public int populationCost;
+        [SerializeField] public int timeToTrain;
         
         [Header("Skills")]
         [SerializeField] public int dummy;

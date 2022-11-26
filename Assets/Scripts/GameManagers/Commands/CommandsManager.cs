@@ -7,7 +7,7 @@ using CharacterController = Unit.Character.CharacterController;
 
 namespace GameManagers.Commands
 {
-    public class CommandsManager : MonoBehaviour
+    /*public class CommandsManager : MonoBehaviour
     {
         private InputActions _inputActions;
         private InputAction _mousePosition;
@@ -27,7 +27,7 @@ namespace GameManagers.Commands
         private void OnEnable()
         {
             _execute.started += _ => GatherTargets();
-            _execute.performed += _ => Move()/*SelectAction()*/;
+            _execute.performed += _ => Move()/*SelectAction()#1#;
             _inputActions.Enable();
         }
         private void OnDisable()
@@ -123,5 +123,5 @@ namespace GameManagers.Commands
                 _mousePosition.ReadValue<Vector2>().y,
                 0.0f);
         }
-    }
+    }*/
 }

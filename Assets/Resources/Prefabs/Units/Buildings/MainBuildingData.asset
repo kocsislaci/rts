@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MainBuildingData
   m_EditorClassIdentifier: 
   name: MainBuilding
-  fieldOfView: 5
+  fieldOfView: 15
   maxHealth: 30
-  defense: 0
+  defense: 1
   resourcesCost:
   - type: 1
     amount: 10

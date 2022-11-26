@@ -1,37 +1,69 @@
-using System;
+using GameManagers;
 using UnityEngine;
 
 namespace Unit
 {
     public abstract class UnitController : MonoBehaviour
     {
-        [SerializeField] private GameObject teamIndicator;
+        public Unit representingObject;
 
-        public Unit selfClass;
+        protected GameObject HealthBar;
+        [SerializeField] protected GameObject healthBarPrefab;
+        [SerializeField] protected Transform healthBarCanvas;
         
-        private Material blueMaterial;
-        private Material redMaterial;
+        public bool isSelected = false;
+        [SerializeField] protected GameObject selectionCircle;
 
-        private void Awake()
+        [SerializeField] protected GameObject teamIndicator;
+        
+        protected void Start()
         {
-            blueMaterial = Resources.Load<Material>("Materials/Unit/BlueTeamMaterial");
-            redMaterial = Resources.Load<Material>("Materials/Unit/RedTeamMaterial");
+            healthBarCanvas = GameObject.Find("HealthBarCanvas").GetComponent<RectTransform>();
         }
-
-        public virtual void InitialiseGameObject(TeamEnum owner, Unit selfClass)
+        public virtual void InitialiseGameObject(Team owner, Unit caller)
         {
-            this.selfClass = selfClass;
-            switch (owner)
-            {
-                case TeamEnum.Blue:
-                    teamIndicator.GetComponent<MeshRenderer>().material = blueMaterial;
-                    break;
-                case TeamEnum.Red:
-                    teamIndicator.GetComponent<MeshRenderer>().material = redMaterial;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(owner), owner, null);
-            }
+            representingObject = caller;
+            teamIndicator.GetComponent<MeshRenderer>().material = Resources.Load<Material>(GameManager.PathToLoadTeamMaterial[owner]);
+        }
+        
+        
+        protected void UpdateHealthBar()
+        {
+            if (HealthBar == null) return;
+            Transform fill = HealthBar.transform.Find("Fill");
+            fill.GetComponent<UnityEngine.UI.Image>().fillAmount = representingObject.CurrentHealth / (float)representingObject.data.maxHealth;
+        }
+        
+        
+        public void Select()
+        {
+            Select(false);
+        }
+        public virtual void Select(bool clearSelection)
+        {
+            isSelected = true;
+            GameManager.SELECTED_UNITS.Add(this);
+        }
+        public virtual void Deselect()
+        {
+            isSelected = false;
+            GameManager.SELECTED_UNITS.Remove(this);
+        }
+        
+        
+        // Here come every gameObject manager function, right?
+        
+        
+        public void TakeHit(int attackPoints)
+        {
+            representingObject.CurrentHealth -= attackPoints;
+            UpdateHealthBar();
+            if (representingObject.CurrentHealth <= 0) Die();
+
+        }
+        protected void Die()
+        {
+            Destroy(gameObject);
         }
     }
 }

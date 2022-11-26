@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CollectableStoneData
   m_EditorClassIdentifier: 
   type: 1
-  amount: 10
+  maxAmount: 10
   prefab: {fileID: 1778523828082890200, guid: 119df1a8c1584404aa0ecadc52c57fc3, type: 3}

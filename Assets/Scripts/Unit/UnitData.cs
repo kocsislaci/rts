@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameManagers.Resources;
+using Unit.ResourceObject;
 using Unit.Skill;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace Unit
     public class UnitData : ScriptableObject
     {
         [Header("General info")]
-        [SerializeField] public new string name;
+        [SerializeField] public UnitType type;
         [SerializeField] public int fieldOfView;
         
         [Header("Health")]

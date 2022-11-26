@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CollectableWoodData
   m_EditorClassIdentifier: 
   type: 2
-  amount: 10
+  maxAmount: 10
   prefab: {fileID: 826394623011375923, guid: 8110c64cd5d7f42f19ad8a0c2f6d57a5, type: 3}
