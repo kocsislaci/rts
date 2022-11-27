@@ -10,18 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91f512102167410f820be583f8f79a30, type: 3}
-  m_Name: MainBuildingData
+  m_Name: HouseData
   m_EditorClassIdentifier: 
-  type: 3
-  fieldOfView: 15
-  maxHealth: 30
-  defense: 1
+  type: 4
+  fieldOfView: 5
+  maxHealth: 5
+  defense: 0
   resourcesCost:
-  - type: 1
-    amount: 10
   - type: 2
-    amount: 10
-  skills:
-  - {fileID: 11400000, guid: 0a7464d75fedf45f383d2d56b2ffce11, type: 2}
-  prefab: {fileID: 4113707490336698779, guid: d9a97943436a14500b2810d1f9ab6a69, type: 3}
-  populationGain: 10
+    amount: 5
+  prefab: {fileID: 7698017727602193230, guid: e95b020e5a6cf4643b8545865b0fb3f2, type: 3}
+  populationGain: 5

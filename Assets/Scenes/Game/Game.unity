@@ -3045,7 +3045,7 @@ GameObject:
   - component: {fileID: 827748591}
   - component: {fileID: 827748592}
   m_Layer: 5
-  m_Name: Resource2Panel
+  m_Name: StoneResourcePanel
   m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4493,10 +4493,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09dcfaa29e26c4c70886bba394b988af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourcesPanel:
-  - {fileID: 1789725247}
-  - {fileID: 827748588}
-  - {fileID: 2058552560}
   populationPanel: {fileID: 1212414654}
   commandPanel: {fileID: 452039620}
   unitListPanel: {fileID: 795575502}
@@ -4718,6 +4714,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2042927071, guid: 78759d1910eda4196b0524f2b1c72f7e, type: 3}
+      propertyPath: grassColor.b
+      value: 0.2784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042927071, guid: 78759d1910eda4196b0524f2b1c72f7e, type: 3}
+      propertyPath: grassColor.r
+      value: 0.45136592
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042927071, guid: 78759d1910eda4196b0524f2b1c72f7e, type: 3}
+      propertyPath: intermediateColor.b
+      value: 0.054901954
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042927071, guid: 78759d1910eda4196b0524f2b1c72f7e, type: 3}
+      propertyPath: intermediateColor.g
+      value: 0.43529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042927071, guid: 78759d1910eda4196b0524f2b1c72f7e, type: 3}
+      propertyPath: intermediateColor.r
+      value: 0.3822939
+      objectReference: {fileID: 0}
     - target: {fileID: 1216095892700173275, guid: 78759d1910eda4196b0524f2b1c72f7e, type: 3}
       propertyPath: m_Name
       value: blueSpawnPoint
@@ -5550,7 +5566,7 @@ GameObject:
   - component: {fileID: 1789725250}
   - component: {fileID: 1789725251}
   m_Layer: 5
-  m_Name: Resource1Panel
+  m_Name: GoldResourcePanel
   m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6175,7 +6191,7 @@ GameObject:
   - component: {fileID: 2058552563}
   - component: {fileID: 2058552564}
   m_Layer: 5
-  m_Name: Resource3Panel
+  m_Name: WoodResourcePanel
   m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,3 +1,4 @@
+/*
 using GameManagers;
 using Unit.Building;
 using UnityEngine;
@@ -37,7 +38,7 @@ namespace Unit.Skill
                     break;
                 }
                     // var characterController = source.GetComponent<CharacterController>();
-                    // new Character.Character(/*source.GetComponent<Building.Building>().Owner*/TeamEnum.Blue, ); // TODO
+                    // new Character.Character(/*source.GetComponent<Building.Building>().Owner#1#TeamEnum.Blue, ); // TODO
                     
                 
 
@@ -47,3 +48,4 @@ namespace Unit.Skill
         }
     }
 }
+*/

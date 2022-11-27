@@ -1,59 +1,133 @@
 using System.Collections.Generic;
 using GameManagers;
 using UI;
-using Unit.Character;
 using UnityEngine;
+using CharacterController = Unit.Character.CharacterController;
 
 namespace Unit.Building
 {
     public class BuildingController : UnitController
     {
+        
+        public override float CurrentHealth
+        {
+            get => currentHealth;
+            set
+            {
+                if (BuildingStatus == BuildingStatus.PLACED)
+                {
+                    transform.localScale = new Vector3(1, CurrentHealth / data.maxHealth, 1);
+                }
+                if (value > data.maxHealth)
+                {
+                    base.CurrentHealth = data.maxHealth;
+                }
+                else
+                {
+                    if (value <= 0)
+                    {
+                        GameManager.MyPopulation.PopulationLimit -= ((BuildingData)data).populationGain;
+                    }
+                    base.CurrentHealth = value;
+                }
+            }
+        }
+        
+        protected BuildingStatus buildingStatus;
+        public BuildingStatus BuildingStatus
+        {
+            get => buildingStatus;
+            set
+            {
+                if (value == BuildingStatus.PENDING)
+                {
+                    collider.isTrigger = true;
+                }
+                if (value is BuildingStatus.PLACED or BuildingStatus.BUILT)
+                {
+                    collider.isTrigger = false;
+                    var material = Resources.Load<Material>(GameManager.PathToLoadBuildingMaterial);
+                    foreach (var buildingPart in buildingParts)
+                    {
+                        buildingPart.GetComponent<MeshRenderer>().material = material;
+                    }
+                    teamIndicator.GetComponent<MeshRenderer>().material =
+                        Resources.Load<Material>(GameManager.PathToLoadTeamMaterial[Owner]);
+                }
+                if (value == BuildingStatus.BUILT)
+                {
+                    GameManager.MyPopulation.PopulationLimit += ((BuildingData)data).populationGain;
+                }
+                buildingStatus = value;
+            }
+        }
+        
+        protected BuildingPlacementStatus buildingPlacementStatus;
+        public BuildingPlacementStatus BuildingPlacementStatus
+        {
+            get => buildingPlacementStatus;
+            set
+            {
+                var material = Resources.Load<Material>(GameManager.PathToLoadBuildingPlacementStatusMaterial[value]);
+                foreach (var buildingPart in buildingParts)
+                {
+                    buildingPart.GetComponent<MeshRenderer>().material = material;
+                }
+                buildingPlacementStatus = value;
+            }
+        }
+        
         [SerializeField] public GameObject spawnPoint;
+        [SerializeField] public GameObject rallyPoint;
         
         private int collosions = 0;
-        [SerializeField] private BoxCollider placerCollider;
+        [SerializeField] private BoxCollider collider;
         [SerializeField] private List<GameObject> buildingParts;
-        
-        public override void InitialiseGameObject(Team owner, Unit caller)
-        {
-            base.InitialiseGameObject(owner, caller);
-            placerCollider.isTrigger = true;
 
-            if (((Building)caller).BuildingStatus == BuildingStatus.PENDING)
+
+        public override void InitialiseGameObject(Team owner)
+        {
+            InitialiseGameObject(owner);
+        }
+        public virtual void InitialiseGameObject(Team owner, bool isAlreadyBuilt = false)
+        {
+            base.InitialiseGameObject(owner);
+
+            BuildingPlacementStatus = BuildingPlacementStatus.VALID;
+            
+            if (isAlreadyBuilt)
             {
-                ChangeMaterial(((Building)caller).BuildingPlacementStatus);
+                BuildingStatus = BuildingStatus.BUILT;
+                CurrentHealth = data.maxHealth;
             }
             else
             {
-                foreach (var buildingPart in buildingParts)
-                {
-                    buildingPart.GetComponent<MeshRenderer>().material =
-                        Resources.Load<Material>(GameManager.PathToLoadBuildingMaterial);
-                }
-                teamIndicator.GetComponent<MeshRenderer>().material = Resources.Load<Material>(GameManager.PathToLoadTeamMaterial[((Building)representingObject).Owner]);
+                BuildingStatus = BuildingStatus.PENDING;
+                CurrentHealth = 1;
             }
-            transform.localScale = new Vector3(1,
-                (float)((Building)representingObject).CurrentHealth / ((Building)representingObject).data.maxHealth, 1);
+            transform.localScale = new Vector3(1, CurrentHealth / data.maxHealth, 1);
         }
-
         
 
+        
+        
+        
         public override void Select(bool clearSelection)
         {
-            if (GameManager.SELECTED_BUILDINGS.Contains(this)) return;
+            if (GameManager.MY_SELECTED_BUILDINGS.Contains(this)) return;
             if (clearSelection)
             {
-                var selectedUnits = new List<Character.CharacterController>(GameManager.SELECTED_CHARACTERS);
+                var selectedUnits = new List<CharacterController>(GameManager.MY_SELECTED_CHARACTERS);
                 foreach (var selectedUnit in selectedUnits)
                     selectedUnit.Deselect();
             }
-            GameManager.SELECTED_BUILDINGS.Add(this);
+            GameManager.MY_SELECTED_BUILDINGS.Add(this);
             
             /*
          * Set healthBar
          */
-            HealthBar = Instantiate(healthBarPrefab, healthBarCanvas, true);
-            HealthBar healthBarComponent = HealthBar.GetComponent<HealthBar>();
+            healthBar = Instantiate(healthBarPrefab, healthBarCanvas, true);
+            HealthBar healthBarComponent = healthBar.GetComponent<HealthBar>();
             healthBarComponent.Initialize(transform);
             healthBarComponent.SetPosition();
             
@@ -64,14 +138,14 @@ namespace Unit.Building
         }
         public override void Deselect()
         {
-            if (!GameManager.SELECTED_BUILDINGS.Contains(this)) return;
-            GameManager.SELECTED_BUILDINGS.Remove(this);
+            if (!GameManager.MY_SELECTED_BUILDINGS.Contains(this)) return;
+            GameManager.MY_SELECTED_BUILDINGS.Remove(this);
                 
             /*
         * Off healthBar
         */
-            Destroy(HealthBar);
-            HealthBar = null;
+            Destroy(healthBar);
+            healthBar = null;
 
             /*
          * Off selection circle
@@ -82,63 +156,56 @@ namespace Unit.Building
         
         
         
+        
+        
         protected void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Terrain")) return;
+            if (BuildingStatus != BuildingStatus.PENDING) return;
+            
             collosions++;
-            if (collosions == 1)
+            if (collosions > 1 && BuildingPlacementStatus != BuildingPlacementStatus.INVALID)
             {
-                ((Building)representingObject).BuildingPlacementStatus = BuildingPlacementStatus.INVALID;
-                ChangeMaterial(BuildingPlacementStatus.INVALID);
+                BuildingPlacementStatus = BuildingPlacementStatus.INVALID;
             }
         }
         protected void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Terrain")) return;
+            if (BuildingStatus != BuildingStatus.PENDING) return;
+
             collosions--;
             if (collosions == 0)
             {
-                ((Building)representingObject).BuildingPlacementStatus = BuildingPlacementStatus.VALID;
-                ChangeMaterial(BuildingPlacementStatus.VALID);
+                BuildingPlacementStatus = BuildingPlacementStatus.VALID;
             }
         }
-        protected void ChangeMaterial(BuildingPlacementStatus status)
-        {
-            foreach (var buildingPart in buildingParts)
-            {
-                buildingPart.GetComponent<MeshRenderer>().material =
-                    Resources.Load<Material>(
-                        GameManager.PathToLoadBuildingPlacementStatusMaterial[status]);
-            }
-        }
-        
         public void Placement()
         {
-            placerCollider.isTrigger = false;
-            ((Building)representingObject).BuildingStatus = BuildingStatus.PLACED;
-            
-            foreach (var buildingPart in buildingParts)
-            {
-                buildingPart.GetComponent<MeshRenderer>().material =
-                    Resources.Load<Material>(GameManager.PathToLoadBuildingMaterial);
-            }
-            teamIndicator.GetComponent<MeshRenderer>().material = Resources.Load<Material>(GameManager.PathToLoadTeamMaterial[((Building)representingObject).Owner]);
+            if (BuildingPlacementStatus == BuildingPlacementStatus.INVALID) return;
+            if (BuildingStatus != BuildingStatus.PENDING) return;
+
+            BuildingStatus = BuildingStatus.PLACED;
         }
-        public void GetBuilt(Character.Character builder)
+        
+        
+        
+        
+        public void GetBuilt(CharacterController builder)
         {
-            if (((Building)representingObject).BuildingStatus == BuildingStatus.PLACED)
-            {
-                ((Building)representingObject).CurrentHealth += ((CharacterData)builder.data).buildingUnit;
-                transform.localScale = new Vector3(1, (float)((Building)representingObject).CurrentHealth / ((Building)representingObject).data.maxHealth, 1);
-                if (((Building)representingObject).CurrentHealth == ((Building)representingObject).data.maxHealth)
-                {
-                    ((Building)representingObject).BuildingStatus = BuildingStatus.BUILT;
-                }
-            }
-            else
-            {
-                Debug.Log("not placed or already built");
-            }
+            // if (BuildingStatus == BuildingStatus.PLACED)
+            // {
+            //     CurrentHealth += ((CharacterData)builder.data).buildingUnit;
+            //     transform.localScale = new Vector3(1, CurrentHealth / ((BuildingData)data).maxHealth, 1);
+            //     if (CurrentHealth == ((BuildingData)data).maxHealth)
+            //     {
+            //         ((Building)representingObject).BuildingStatus = BuildingStatus.BUILT;
+            //     }
+            // }
+            // else
+            // {
+            //     Debug.Log("not placed or already built");
+            // }
         }
     }
 }

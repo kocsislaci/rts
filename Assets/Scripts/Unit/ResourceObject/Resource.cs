@@ -4,44 +4,11 @@ namespace Unit.ResourceObject
 {
     public abstract class Resource
     {
-        /*
-         * Reference to itself in the game scene
-         */
-        public GameObject itself;
-        protected ResourceController controller;
+        public GameObject gameObject;
         
-        /*
-         * Preloaded data
-         */
-        protected ResourceData resourceData;
-        
-        /*
-         * Variable data
-         */
-        protected int currentAmount;
-        protected int CurrentAmount
+        public virtual void Destroy()
         {
-            get
-            {
-                return currentAmount;
-            }
-            set
-            {
-                currentAmount = value;
-            }
-        }
-
-        public Resource()
-        {
-        }
-
-        public Resource(Vector3 startPosition)
-        {
-        }
-
-        ~Resource()
-        {
-            Object.Destroy(itself);
+            Object.Destroy(gameObject);
         }
     }
 }

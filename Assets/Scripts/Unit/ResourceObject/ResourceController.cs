@@ -1,15 +1,27 @@
 using GameManagers.Resources;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Unit.ResourceObject
 {
     public class ResourceController : MonoBehaviour
     {
-        public Resource selfClass;
+        public ResourceData data;
 
-        public void InitialiseGameObject(Resource selfClass)
+        protected int currentAmount;
+        protected int CurrentAmount
         {
-            this.selfClass = selfClass;
+            get => currentAmount;
+            set
+            {
+                currentAmount = value;
+            }
+        }
+
+        public UnityEvent OnCollapsing = new();
+
+        public void InitialiseGameObject()
+        {
         }
 
         public ResourceValue GetHarvested(Character.Character harvester)

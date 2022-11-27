@@ -9,8 +9,5 @@ namespace Unit.Building
     {
         [Header("Gain")]
         [SerializeField] public int populationGain;
-
-        [Header("Skills")]
-        [SerializeField] public int dummy;
     }
 }

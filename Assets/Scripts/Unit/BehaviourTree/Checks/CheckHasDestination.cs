@@ -1,17 +1,22 @@
+using Unit.Character;
+
 namespace Unit.BehaviourTree.Checks
 {
     public class CheckHasDestination: Node
     {
+        private CharacterController _controller;
+        
+        public CheckHasDestination(ref CharacterController controller) : base()
+        {
+            _controller = controller;
+        }
+
         public override NodeState Evaluate()
         {
-            object destinationPoint = GetData("destinationPoint");
-            if (destinationPoint == null)
-            {
-                _state = NodeState.FAILURE;
-                return _state;
-            }
-            _state = NodeState.SUCCESS;
-            return _state;
+            if (_controller.HasDestination())
+                return NodeState.SUCCESS;
+            else
+                return NodeState.FAILURE;
         }
     }
 }

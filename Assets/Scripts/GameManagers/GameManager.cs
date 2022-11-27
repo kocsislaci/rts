@@ -5,7 +5,8 @@ using Unit.Building;
 using Unit.Character;
 using Unit.ResourceObject;
 using Unit.ResourceObject.ImplementedResources;
-using Unit.Skill;
+// using Unit.Skill;
+using UnityEditor;
 using UnityEngine;
 
 namespace GameManagers
@@ -43,35 +44,38 @@ namespace GameManagers
          * Local player information
          */
         public static Team MyTeam { get; set; }
-
+        /*
+         * Player resources and population data
+         */
+        public static readonly Dictionary<ResourceType, ResourceGlobal> MyResources = new()
+        {
+            { ResourceType.Gold, new(ResourceType.Gold) },
+            { ResourceType.Stone, new(ResourceType.Stone) },
+            { ResourceType.Wood, new(ResourceType.Wood) },
+        };
+        public static readonly Population MyPopulation = new(maxPopulation: 200);
         /*
          * Local player mutable state
          */
         public static UserInputState InputState { get; set; }
-        
-
-        /*
-         * Player resources and population data
-         */
-        public static readonly List<ResourceGlobal> Resources = new()
-        {
-            new(ResourceType.Gold),
-            new(ResourceType.Stone),
-            new(ResourceType.Wood)
-        };
-        public static readonly Population Population = new(maxPopulation: 200);
         /*
          * Player objects in the gameSpace
          */
-        public static readonly List<Unit.Unit> UNITS = new();
-        public static readonly List<Character> CHARACTERS = new();
-        public static readonly List<Building> BUILDINGS = new();
-        /*
-         * Selected Units in the gameSpace
-         */
-        public static readonly List<UnitController> SELECTED_UNITS = new();
-        public static readonly List<Unit.Character.CharacterController> SELECTED_CHARACTERS = new(); 
-        public static readonly List<BuildingController> SELECTED_BUILDINGS = new();
+        public static readonly Dictionary<GUID ,Unit.Unit> MY_UNITS = new();
+        public static readonly Dictionary<GUID, Character> MY_CHARACTERS = new();
+        public static readonly Dictionary<GUID, Building> MY_BUILDINGS = new();
+        public static readonly List<UnitController> MY_SELECTED_UNITS = new();
+        public static readonly List<Unit.Character.CharacterController> MY_SELECTED_CHARACTERS = new(); 
+        public static readonly List<BuildingController> MY_SELECTED_BUILDINGS = new();
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         /*
          * Neutral objects in the gameSpace
@@ -79,6 +83,7 @@ namespace GameManagers
         public static readonly List<WoodResource> WOOD_RESOURCES = new();
         public static readonly List<StoneResource> STONE_RESOURCES = new();
         public static readonly List<GoldResource> GOLD_RESOURCES = new();
+        
         
         /*
          * Paths to load prefabs and data from Resources
@@ -129,15 +134,15 @@ namespace GameManagers
             { UnitType.Stone, "Prefabs/UI/" }, // TODO
             { UnitType.Wood, "Prefabs/UI/" }, // TODO
         };
-        public static readonly Dictionary<SkillType, string> PathToLoadButton = new()
-        {
-            { SkillType.CreateCharacter, "Prefabs/UI/Button/CreateCharacterButton" },
-            
-            { SkillType.BuildMainBuilding, "Prefabs/UI/Button/BuildMainBuildingButton" },
-            { SkillType.BuildHouse, "Prefabs/UI/Button/BuildHouseButton" },
-            { SkillType.BuildWall, "Prefabs/UI/Button/BuildWallButton" }, // TODO
-            { SkillType.BuildTower, "Prefabs/UI/Button/BuildTowerButton" }, // TODO
-        };
+        // public static readonly Dictionary<SkillType, string> PathToLoadButton = new()
+        // {
+        //     { SkillType.CreateCharacter, "Prefabs/UI/Button/CreateCharacterButton" },
+        //     
+        //     { SkillType.BuildMainBuilding, "Prefabs/UI/Button/BuildMainBuildingButton" },
+        //     { SkillType.BuildHouse, "Prefabs/UI/Button/BuildHouseButton" },
+        //     { SkillType.BuildWall, "Prefabs/UI/Button/BuildWallButton" }, // TODO
+        //     { SkillType.BuildTower, "Prefabs/UI/Button/BuildTowerButton" }, // TODO
+        // };
         public static readonly Dictionary<Team, string> PathToLoadTeamMaterial = new()
         {
             { Team.Blue, "Materials/Unit/BlueTeamMaterial" },
@@ -149,5 +154,14 @@ namespace GameManagers
             { BuildingPlacementStatus.INVALID, "Materials/Unit/Building/InvalidMaterial" },
         };
         public static readonly string PathToLoadBuildingMaterial = "Materials/Unit/Building/BuildingMaterial";
+
+        public static readonly Dictionary<ResourceType, string> PathToLoadResourceIcon = new()
+        {
+            { ResourceType.Gold, "Materials/UI/Resource/gold" },
+            { ResourceType.Stone, "Materials/UI/Resource/stone" },
+            { ResourceType.Wood, "Materials/UI/Resource/wood" },
+        };
+        public static readonly string PathToLoadPopulationIcon = "Materials/UI/Population/population";
+
     }
 }

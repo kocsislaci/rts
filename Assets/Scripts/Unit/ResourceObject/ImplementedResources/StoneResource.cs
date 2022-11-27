@@ -9,16 +9,12 @@ namespace Unit.ResourceObject.ImplementedResources
     {
         public StoneResource(Vector3 startPosition)
         {
-            // - initialize the fields
-            resourceData = Resources.Load<ResourceData>(GameManager.PathToLoadData[UnitType.Stone]);
-            //
-            
-            CurrentAmount = resourceData.maxAmount;
-            
-            // // - instantiate the gameObject.
-            itself = Object.Instantiate(resourceData.prefab, startPosition, Quaternion.identity);
-            controller = itself.GetComponent<ResourceController>();
-            controller.InitialiseGameObject(this);
+            var prefab = Resources.Load<GameObject>(GameManager.PathToLoadUnitPrefab[UnitType.Stone]);
+            gameObject = Object.Instantiate(prefab, startPosition, Quaternion.identity);
+
+            var controller = gameObject.GetComponent<ResourceController>();
+            controller.InitialiseGameObject();
+            controller.OnCollapsing.AddListener(Destroy);
         }
     }
 }

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using TMPro;
+using Unit;
+using Unit.ResourceObject;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +10,8 @@ namespace GameManagers
 {
     public class UserInterfaceManager : MonoBehaviour
     {
-        [Header("Resources and population panel")]
-        [SerializeField] private List<GameObject> resourcesPanel = new List<GameObject>();
+        [Header("Resources and population panel")] [SerializeField]
+        private Dictionary<ResourceType, GameObject> resourcesPanel = new();
         [SerializeField] private GameObject populationPanel;
 
         [Header("Command and unit panel")]
@@ -19,11 +21,11 @@ namespace GameManagers
         [SerializeField] private GameObject unitListPanel;
         [SerializeField] private GameObject unitDescriptionPanel;
 
-        private List<TextMeshProUGUI> resourceTexts = new List<TextMeshProUGUI>();
+        private Dictionary<ResourceType, TextMeshProUGUI> resourceTexts = new();
         private TextMeshProUGUI populationText;
 
-        [CanBeNull] private Unit.Unit firstSelectedUnit;
-        private List<Unit.Unit> selectedUnits = new();
+        [CanBeNull] private UnitController firstSelectedUnit;
+        private List<UnitController> selectedUnits = new();
         private UserInputManager.UserInputManager _userInputManager;
         
         private void Start()
@@ -31,8 +33,8 @@ namespace GameManagers
             InitResourcesPanel();
             _userInputManager = gameObject.GetComponent<UserInputManager.UserInputManager>();
             
-            _userInputManager.selectionEvent.AddListener(UpdateCommandPanel);
-            _userInputManager.deselectionEvent.AddListener(ClearCommandPanel);
+            // _userInputManager.selectionEvent.AddListener(UpdateCommandPanel);
+            // _userInputManager.deselectionEvent.AddListener(ClearCommandPanel);
             
             _userInputManager.selectionEvent.AddListener(UpdateUnitListPanel);
             _userInputManager.deselectionEvent.AddListener(ClearUnitListPanel);
@@ -40,27 +42,28 @@ namespace GameManagers
 
         private void InitResourcesPanel()
         {
-            var resources = GameManager.Resources;
-            int i = 0;
+            var resources = GameManager.MyResources;
+            resourcesPanel.Add(ResourceType.Gold ,GameObject.Find("GoldResourcePanel"));
+            resourcesPanel.Add(ResourceType.Stone ,GameObject.Find("StoneResourcePanel"));
+            resourcesPanel.Add(ResourceType.Wood ,GameObject.Find("WoodResourcePanel"));
+
             foreach (var resourcePanel in resourcesPanel)
             {
-                resourceTexts.Add(resourcePanel.GetComponentInChildren<TextMeshProUGUI>());
-                resourceTexts[i].text = resources[i].Amount.ToString();
+                resourceTexts.Add(resourcePanel.Key, resourcePanel.Value.GetComponentInChildren<TextMeshProUGUI>());
+                resourceTexts[resourcePanel.Key].text = resources[resourcePanel.Key].Amount.ToString();
             
-                resources[i].HasChanged.AddListener(UpdateResource);
+                resources[resourcePanel.Key].HasChanged.AddListener(UpdateResource);
             
-                string path = "Materials/UI/Resource/" + resources[i].type;
-                Sprite sprite = UnityEngine.Resources.Load<Sprite>(path);
-                resourcePanel.GetComponentInChildren<Image>().sprite = sprite;
-                i++;
+                Sprite sprite = UnityEngine.Resources.Load<Sprite>(GameManager.PathToLoadResourceIcon[resourcePanel.Key]);
+                resourcePanel.Value.GetComponentInChildren<Image>().sprite = sprite;
             }
-            GameManager.Population.OnPopulationHasChanged.AddListener(UpdatePopulation);
-            GameManager.Population.OnPopulationLimitHasChanged.AddListener(UpdatePopulationLimit);
+            GameManager.MyPopulation.OnPopulationHasChanged.AddListener(UpdatePopulation);
+            GameManager.MyPopulation.OnPopulationLimitHasChanged.AddListener(UpdatePopulationLimit);
 
             populationText = populationPanel.GetComponentInChildren<TextMeshProUGUI>();
-            populationText.text = PopulationTextFormatter(GameManager.Population.ActualPopulation,
-                GameManager.Population.PopulationLimit);
-            populationPanel.GetComponentInChildren<Image>().sprite = UnityEngine.Resources.Load<Sprite>("Materials/UI/Population/population");;
+            populationText.text = PopulationTextFormatter(GameManager.MyPopulation.ActualPopulation,
+                GameManager.MyPopulation.PopulationLimit);
+            populationPanel.GetComponentInChildren<Image>().sprite = UnityEngine.Resources.Load<Sprite>(GameManager.PathToLoadPopulationIcon); 
         }
 
         private string PopulationTextFormatter(int actual, int limit)
@@ -68,26 +71,22 @@ namespace GameManagers
             return actual.ToString() + "/" + limit.ToString();
         }
 
-        private void UpdateResource(int amount) 
+        private void UpdateResource(ResourceType type, int amount) 
         {
-            for (int i = 0; i < resourceTexts.Count; i++)
-            {
-                resourceTexts[i].text = amount.ToString();
-            }
-
+            resourceTexts[type].text = amount.ToString();
         }
         private void UpdatePopulation(int population)
         {
-            populationText.text = PopulationTextFormatter(population, GameManager.Population.PopulationLimit);
+            populationText.text = PopulationTextFormatter(population, GameManager.MyPopulation.PopulationLimit);
 
         }
         private void UpdatePopulationLimit(int limit)
         {
-            populationText.text = PopulationTextFormatter(GameManager.Population.ActualPopulation, limit);
+            populationText.text = PopulationTextFormatter(GameManager.MyPopulation.ActualPopulation, limit);
         }
         
         
-        private void UpdateCommandPanel(Unit.Unit unit)
+        /*private void UpdateCommandPanel(Unit.Unit unit)
         {
             if (firstSelectedUnit == null)
             {
@@ -112,15 +111,15 @@ namespace GameManagers
             {
                 Destroy(button);
             }
-        }
+        }*/
 
-        private void UpdateUnitListPanel(Unit.Unit unit)
+        private void UpdateUnitListPanel(UnitController unit)
         {
             selectedUnits.Add(unit);
 
             foreach (var selectedUnit in selectedUnits)
             {
-                var igo = UnityEngine.Resources.Load(GameManager.PathToLoadIconPrefab[selectedUnit.unitType]) as GameObject;
+                var igo = UnityEngine.Resources.Load(GameManager.PathToLoadIconPrefab[selectedUnit.data.type]) as GameObject;
                 unitListPanelIcons.Add(Instantiate(igo, unitListPanel.transform));
             }
         }

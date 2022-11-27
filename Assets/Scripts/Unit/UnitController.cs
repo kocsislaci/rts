@@ -1,37 +1,50 @@
 using GameManagers;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Unit
 {
     public abstract class UnitController : MonoBehaviour
     {
-        public Unit representingObject;
+        public UnitData data;
+        protected Team owner;
 
-        protected GameObject HealthBar;
-        [SerializeField] protected GameObject healthBarPrefab;
-        [SerializeField] protected Transform healthBarCanvas;
-        
+        public Team Owner
+        {
+            get => owner;
+            set { owner = value; }
+        }
+
+        protected float currentHealth;
+        public virtual float CurrentHealth
+        {
+            get => currentHealth;
+            set
+            {
+                currentHealth = value;
+                UpdateHealthBar();
+                if (currentHealth <= 0) Die();
+            }
+        }
+
         public bool isSelected = false;
         [SerializeField] protected GameObject selectionCircle;
-
         [SerializeField] protected GameObject teamIndicator;
+        [SerializeField] protected GameObject minimapIndicator;
+
+        protected GameObject healthBar;
+        [SerializeField] protected GameObject healthBarPrefab;
+        [SerializeField] protected Transform healthBarCanvas;
+        public UnityEvent OnDying = new();
+
         
-        protected void Start()
+        public virtual void InitialiseGameObject(Team owner)
         {
+            Owner = owner;
+            CurrentHealth = data.maxHealth;
+
             healthBarCanvas = GameObject.Find("HealthBarCanvas").GetComponent<RectTransform>();
-        }
-        public virtual void InitialiseGameObject(Team owner, Unit caller)
-        {
-            representingObject = caller;
-            teamIndicator.GetComponent<MeshRenderer>().material = Resources.Load<Material>(GameManager.PathToLoadTeamMaterial[owner]);
-        }
-        
-        
-        protected void UpdateHealthBar()
-        {
-            if (HealthBar == null) return;
-            Transform fill = HealthBar.transform.Find("Fill");
-            fill.GetComponent<UnityEngine.UI.Image>().fillAmount = representingObject.CurrentHealth / (float)representingObject.data.maxHealth;
+            SetTeamIndicatorMaterial(Resources.Load<Material>(GameManager.PathToLoadTeamMaterial[owner]));
         }
         
         
@@ -42,28 +55,57 @@ namespace Unit
         public virtual void Select(bool clearSelection)
         {
             isSelected = true;
-            GameManager.SELECTED_UNITS.Add(this);
+            GameManager.MY_SELECTED_UNITS.Add(this);
         }
         public virtual void Deselect()
         {
             isSelected = false;
-            GameManager.SELECTED_UNITS.Remove(this);
+            GameManager.MY_SELECTED_UNITS.Remove(this);
+        }
+        public virtual void SetTeamIndicatorMaterial(Material material)
+        {
+            teamIndicator.GetComponent<MeshRenderer>().material = material;
+            minimapIndicator.GetComponent<MeshRenderer>().material = material;
         }
         
         
-        // Here come every gameObject manager function, right?
         
-        
-        public void TakeHit(int attackPoints)
+        protected void UpdateHealthBar()
         {
-            representingObject.CurrentHealth -= attackPoints;
-            UpdateHealthBar();
-            if (representingObject.CurrentHealth <= 0) Die();
-
+            if (healthBar == null) return;
+            Transform fill = healthBar.transform.Find("Fill");
+            fill.GetComponent<UnityEngine.UI.Image>().fillAmount = CurrentHealth / data.maxHealth;
+        }
+        public void TakeDamage(float attackPoints)
+        {
+            CurrentHealth -= attackPoints;
         }
         protected void Die()
         {
-            Destroy(gameObject);
+            OnDying.Invoke();
         }
+        
+        
+        
+        /*
+         protected List<SkillController> skillControllers;
+        public List<SkillController> SkillControllers { get => skillControllers; }
+         
+         protected void InitializeSkillControllers()
+        {
+            skillControllers = new List<SkillController>();
+            SkillController skillController;
+            foreach (SkillData skill in data.skills)
+            {
+                var thisGameObject = gameObject;
+                skillController = thisGameObject.AddComponent<SkillController>();
+                skillController.Initialize(skill, thisGameObject);
+                skillControllers.Add(skillController);
+            }
+        }
+        public void TriggerSkill(int index, GameObject target = null)
+        {
+            skillControllers[index].Trigger(target);
+        }*/
     }
 }

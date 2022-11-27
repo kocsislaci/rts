@@ -30,7 +30,7 @@ namespace GameManagers.UserInputManager
         /*
          * Selection events
          */
-        public UnityEvent<Unit.Unit> selectionEvent;
+        public UnityEvent<UnitController> selectionEvent;
         public UnityEvent deselectionEvent;
         /*
          * Command events
@@ -58,7 +58,7 @@ namespace GameManagers.UserInputManager
             /*
              * Selection events
              */
-            selectionEvent = new UnityEvent<Unit.Unit>();
+            selectionEvent = new UnityEvent<UnitController>();
             deselectionEvent = new UnityEvent();
             
             /*
@@ -123,12 +123,12 @@ namespace GameManagers.UserInputManager
                 if (_raycastHit.transform.CompareTag("Building"))
                 {
                     _raycastHit.transform.gameObject.GetComponent<BuildingController>().Select();
-                    selectionEvent.Invoke(_raycastHit.transform.gameObject.GetComponent<BuildingController>().representingObject);
+                    selectionEvent.Invoke(_raycastHit.transform.gameObject.GetComponent<BuildingController>());
                 }
                 else if (_raycastHit.transform.CompareTag("Character"))
                 {
                     _raycastHit.transform.gameObject.GetComponent<CharacterController>().Select();
-                    selectionEvent.Invoke(_raycastHit.transform.gameObject.GetComponent<CharacterController>().representingObject);
+                    selectionEvent.Invoke(_raycastHit.transform.gameObject.GetComponent<CharacterController>());
                 }
                 else if (_raycastHit.transform.CompareTag("Resource"))
                 {
@@ -167,20 +167,21 @@ namespace GameManagers.UserInputManager
             /*
              * Can only select Characters this way
              */
-            foreach (var character in GameManager.CHARACTERS)
+            foreach (var characterEntry in GameManager.MY_CHARACTERS)
             {
-                var inBounds = selectionBounds.Contains(Camera.main.WorldToViewportPoint(character.sceneGameObject.transform.position));
+                var inBounds = selectionBounds.Contains(Camera.main.WorldToViewportPoint(characterEntry.Value.gameObject.transform.position));
+                var controller = characterEntry.Value.gameObject.GetComponent<UnitController>();
                 if (inBounds)
                 {
-                    character.controller.Select();
-                    if (GameManager.SELECTED_CHARACTERS.Contains( (CharacterController)_raycastHit.transform.gameObject.GetComponent<UnitController>()))
+                    controller.Select();
+                    if (GameManager.MY_SELECTED_CHARACTERS.Contains( (CharacterController)_raycastHit.transform.gameObject.GetComponent<UnitController>()))
                     {
-                        selectionEvent.Invoke(_raycastHit.transform.gameObject.GetComponentInChildren<CharacterController>().representingObject);
+                        selectionEvent.Invoke(_raycastHit.transform.gameObject.GetComponent<UnitController>());
                     }
                 }
                 else
                 {
-                    character.controller.Deselect();
+                    controller.Deselect();
                 }
             }
         }
@@ -193,13 +194,13 @@ namespace GameManagers.UserInputManager
          */
         private void _DeselectAllUnits()
         {
-            List<CharacterController> selectedUnits = new List<CharacterController>(GameManager.SELECTED_CHARACTERS);
+            List<CharacterController> selectedUnits = new List<CharacterController>(GameManager.MY_SELECTED_CHARACTERS);
             foreach (CharacterController usc in selectedUnits)
                 usc.Deselect();
         }
         private void _DeselectAllBuilding()
         {
-            List<BuildingController> selectedBuildings = new List<BuildingController>(GameManager.SELECTED_BUILDINGS);
+            List<BuildingController> selectedBuildings = new List<BuildingController>(GameManager.MY_SELECTED_BUILDINGS);
             foreach (BuildingController bsc in selectedBuildings)
                 bsc.Deselect();
         }

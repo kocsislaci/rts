@@ -8,26 +8,24 @@ namespace Unit.Character
     public class CharacterData : UnitData
     {
         [Header("General info")]
-        [SerializeField] public int speed;
-        
+        [SerializeField] public float speed;
+        [SerializeField] public float reach;
+
         [Header("Gathering")]
-        [SerializeField] public int gatherSpeed;
         [SerializeField] public int maxLoad;
+        [SerializeField] public int gatherUnit;
+        [SerializeField] public float gatherSpeed;
 
         [Header("Building")]
         [SerializeField] public int buildingUnit;
-        [SerializeField] public int buildingSpeed;
+        [SerializeField] public float buildingSpeed;
 
         [Header("Fighting")]
-        [SerializeField] public int attackDamage;
-        [SerializeField] public int attackSpeed;
-        [SerializeField] public int attackRange; // range overall TODO
-
+        [SerializeField] public float attackDamage;
+        [SerializeField] public float attackSpeed;
+        
         [Header("Costs")]
         [SerializeField] public int populationCost;
         [SerializeField] public int timeToTrain;
-        
-        [Header("Skills")]
-        [SerializeField] public int dummy;
     }
 }

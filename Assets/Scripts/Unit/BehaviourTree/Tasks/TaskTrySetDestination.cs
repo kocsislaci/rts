@@ -18,7 +18,7 @@ namespace Unit.BehaviourTree.Tasks
         private InputAction _mousePosition;
         private InputAction _modifier; // shift to add to queue not to overwrite it
 
-        public TaskTrySetDestination(CharacterController controller) : base()
+        public TaskTrySetDestination(ref CharacterController controller) : base()
         {
             _controller = controller;
             
@@ -40,7 +40,7 @@ namespace Unit.BehaviourTree.Tasks
                         1000f
                     ))
                 {
-                    Parent.Parent.SetData("destinationPoint", _raycastHit.point);
+                    _controller.SetDestination(_raycastHit.point);
                     _state = NodeState.SUCCESS;
                     return _state;
                 }

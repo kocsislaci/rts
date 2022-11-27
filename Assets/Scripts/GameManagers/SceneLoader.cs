@@ -3,6 +3,7 @@ using TerrainObject;
 using Unit;
 using Unit.Building;
 using Unit.Character;
+using Unit.ResourceObject;
 using UnityEngine;
 
 namespace GameManagers
@@ -21,8 +22,11 @@ namespace GameManagers
 
         void Start()
         {
-            // mock start
-            LoadStarterResources();
+            LoadMyStarterResources(
+                new ResourceValue(ResourceType.Gold, 100),
+                new ResourceValue(ResourceType.Stone, 90),
+                new ResourceValue(ResourceType.Wood, 80)
+            );
 
             // load map
             mapManager.GenerateMap();
@@ -31,17 +35,21 @@ namespace GameManagers
             cameraRig.SetStartPosition(mapManager.SampleHeightFromWorldPosition(blueSpawnPoint.transform.position));
 
             // Put some units for the player and set owner color
-            LoadStarterBuildingAndUnits();
+            LoadMyStarterBuildingAndUnits();
         }
 
-        private void LoadStarterResources()
+        private void LoadMyStarterResources(
+            ResourceValue goldAmount,
+            ResourceValue stoneAmount,
+            ResourceValue woodAmount
+        )
         {
-            GameManager.Resources[0].Amount = 100;
-            GameManager.Resources[1].Amount = 90;
-            GameManager.Resources[2].Amount = 80;
+            GameManager.MyResources[goldAmount.type].Amount = goldAmount.amount;
+            GameManager.MyResources[stoneAmount.type].Amount = stoneAmount.amount;
+            GameManager.MyResources[woodAmount.type].Amount = woodAmount.amount;
         }
 
-        private void LoadStarterBuildingAndUnits()
+        private void LoadMyStarterBuildingAndUnits()
         {
             /*
              * Set self color in GameManager
@@ -51,16 +59,17 @@ namespace GameManagers
             /*
              * Adding 1 MainBuilding
              */
-            new Building(Team.Blue, mapManager.SampleHeightFromWorldPosition(blueSpawnPoint.transform.position), true);
+            var blueSpawnPointPosition = blueSpawnPoint.transform.position;
+            new Building(Team.Blue, mapManager.SampleHeightFromWorldPosition(blueSpawnPointPosition), true);
             
             /*
              * Adding 3 characters
              */
             var positions = new List<Vector3>
             {
-                mapManager.SampleHeightFromWorldPosition(blueSpawnPoint.transform.position + Vector3.back * 10f),
-                mapManager.SampleHeightFromWorldPosition(blueSpawnPoint.transform.position + Vector3.back * 12f),
-                mapManager.SampleHeightFromWorldPosition(blueSpawnPoint.transform.position + Vector3.back * 14f),
+                mapManager.SampleHeightFromWorldPosition(blueSpawnPointPosition + Vector3.back * 10f),
+                mapManager.SampleHeightFromWorldPosition(blueSpawnPointPosition + Vector3.back * 12f),
+                mapManager.SampleHeightFromWorldPosition(blueSpawnPointPosition + Vector3.back * 14f),
             };
             foreach (var position in positions)
             {

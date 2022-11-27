@@ -161,7 +161,7 @@ Transform:
   m_GameObject: {fileID: 5759215690828540435}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 100, z: 0}
-  m_LocalScale: {x: 60, y: 60, z: 60}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7698017727602193229}
@@ -327,12 +327,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead68442f41f7448288018d94dd3673e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarPrefab: {fileID: 5099601725015678127, guid: 3f525c66b3610441ba4aa5576b53c827, type: 3}
-  healthBarCanvas: {fileID: 0}
+  data: {fileID: 11400000, guid: 49f062281ecc247ce978351ee5928c0c, type: 2}
   isSelected: 0
   selectionCircle: {fileID: 4508931541692017175}
   teamIndicator: {fileID: 5337862047561313032}
+  minimapIndicator: {fileID: 5759215690828540435}
+  healthBarPrefab: {fileID: 5099601725015678127, guid: 3f525c66b3610441ba4aa5576b53c827, type: 3}
+  healthBarCanvas: {fileID: 0}
+  OnDying:
+    m_PersistentCalls:
+      m_Calls: []
   spawnPoint: {fileID: 7206257475427265295}
-  placerCollider: {fileID: 2780396451774144331}
+  rallyPoint: {fileID: 0}
+  collider: {fileID: 0}
   buildingParts:
   - {fileID: 5337862047561313032}

@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using GameManagers.Resources;
 using Unit.ResourceObject;
-using Unit.Skill;
 using UnityEngine;
 
 namespace Unit
@@ -11,17 +9,17 @@ namespace Unit
     {
         [Header("General info")]
         [SerializeField] public UnitType type;
-        [SerializeField] public int fieldOfView;
+        [SerializeField] public float fieldOfView;
         
         [Header("Health")]
-        [SerializeField] public int maxHealth;
-        [SerializeField] public int defense;
+        [SerializeField] public float maxHealth;
+        [SerializeField] public float defense;
         
         [Header("Costs")]
-        [SerializeField] public List<ResourceValue> resourcesCost = new List<ResourceValue>();
+        [SerializeField] public List<ResourceValue> resourcesCost = new();
         
-        [Header("Skills")]
-        [SerializeField] public List<SkillData> skills = new List<SkillData>();
+        /*[Header("Skills")]
+        [SerializeField] public List<SkillData> skills = new();*/
 
         [Header("In game object")]
         [SerializeField] public GameObject prefab;

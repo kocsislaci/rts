@@ -1,10 +1,11 @@
+/*
 namespace Unit.Skill
 {
     public enum SkillType
     {
         /*
          * Building skills
-         */
+         #1#
         CreateCharacter, // Later distinguish to the following
         // CreateBuilder
         
@@ -17,7 +18,7 @@ namespace Unit.Skill
         
         /*
          * Unit skills
-         */
+         #1#
         // Change mood
         ChangeMood, // Gatherer, Attacker, Builder
         
@@ -44,3 +45,4 @@ namespace Unit.Skill
         BuildWall,
     }
 }
+*/

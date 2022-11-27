@@ -4,16 +4,17 @@ using UnityEngine.Events;
 
 namespace GameManagers.Resources
 {
+    [Serializable]
     public class ResourceGlobal
     {
         public ResourceGlobal(ResourceType type)
         {
-            HasChanged = new UnityEvent<int>();
+            HasChanged = new UnityEvent<ResourceType, int>();
             this.type = type;
             Amount = 0;
         }
     
-        public UnityEvent<int> HasChanged;
+        public UnityEvent<ResourceType, int> HasChanged;
 
         public ResourceType type;
         private int _amount;
@@ -23,7 +24,7 @@ namespace GameManagers.Resources
             set
             {
                 _amount = value;
-                HasChanged.Invoke(_amount);
+                HasChanged.Invoke(type ,_amount);
             }
         }
     }

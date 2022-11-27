@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GameManagers;
 using UI;
+using Unit.ResourceObject;
 using UnityEngine;
 
 using UnityEngine.AI;
@@ -9,28 +10,71 @@ namespace Unit.Character
 {
     public class CharacterController : UnitController
     {
+        protected ResourceValue currentLoad;
+        public ResourceValue CurrentLoad
+        {
+            get => currentLoad;
+            set
+            {
+                currentLoad = value;
+            }
+        }
+        public override float CurrentHealth
+        {
+            get => currentHealth;
+            set
+            {
+                if (value <= 0)
+                {
+                    GameManager.MyPopulation.ActualPopulation -= ((CharacterData)data).populationCost;
+                }
+                base.CurrentHealth = value;
+            }
+        }
         [SerializeField] public NavMeshAgent agent;
+        public CharacterStance stance;
+        public CharacterMood mood;
+        public Vector3? destination = null;
+        public GameObject target;
+        public GameObject resource;
+        public GameObject dropOffBuilding;
         
+        
+        public override void InitialiseGameObject(Team owner)
+        {
+            InitialiseGameObject(owner);
+        }
+        public virtual void InitialiseGameObject(Team owner, Vector3? rallyPosition = null)
+        {
+            base.InitialiseGameObject(owner);
+            CurrentLoad = null;
+            GameManager.MyPopulation.ActualPopulation += ((CharacterData)data).populationCost;
+            if (rallyPosition != null)
+            {
+                destination = (Vector3)rallyPosition;
+            }
+        }
+
         
         
         public override void Select(bool clearSelection)
         {
             base.Select(clearSelection);
-            if (GameManager.SELECTED_CHARACTERS.Contains(this)) return;
+            if (GameManager.MY_SELECTED_CHARACTERS.Contains(this)) return;
             if (clearSelection)
             {
-                var selectedUnits = new List<CharacterController>(GameManager.SELECTED_CHARACTERS);
+                var selectedUnits = new List<CharacterController>(GameManager.MY_SELECTED_CHARACTERS);
                 foreach (var selectedUnit in selectedUnits)
                     selectedUnit.Deselect();
             }
 
-            GameManager.SELECTED_CHARACTERS.Add(this);
+            GameManager.MY_SELECTED_CHARACTERS.Add(this);
 
             /*
          * Set healthBar
          */
-            HealthBar = Instantiate(healthBarPrefab, healthBarCanvas, true);
-            HealthBar healthBarComponent = HealthBar.GetComponent<HealthBar>();
+            healthBar = Instantiate(healthBarPrefab, healthBarCanvas, true);
+            HealthBar healthBarComponent = healthBar.GetComponent<HealthBar>();
             healthBarComponent.Initialize(transform);
             healthBarComponent.SetPosition();
 
@@ -46,15 +90,15 @@ namespace Unit.Character
 
         public override void Deselect()
         {
-            if (!GameManager.SELECTED_CHARACTERS.Contains(this)) return;
-            GameManager.SELECTED_CHARACTERS.Remove(this);
+            if (!GameManager.MY_SELECTED_CHARACTERS.Contains(this)) return;
+            GameManager.MY_SELECTED_CHARACTERS.Remove(this);
             base.Deselect();
 
             /*
          * Off healthBar
          */
-            Destroy(HealthBar);
-            HealthBar = null;
+            Destroy(healthBar);
+            healthBar = null;
 
             /*
          * Off selection circle
@@ -63,18 +107,27 @@ namespace Unit.Character
         }
         
         
-        
-        
-        public bool MoveTo(Vector3 targetPosition)
+        public void SetDestination(Vector3 targetPosition)
         {
-            return agent.SetDestination(targetPosition);
+            destination = targetPosition;
         }
+
+        public bool HasDestination()
+        {
+            return destination != null;
+        }
+
+        public bool MoveToDestination()
+        {
+            if (destination == null) return false;
+            return agent.SetDestination((Vector3)destination);
+        }
+        
         public void Attack(Transform target)
         {
             UnitController uc = target.GetComponent<UnitController>();
             if (uc == null) return;
-            uc.TakeHit(((CharacterData)representingObject.data).attackDamage);
+            uc.TakeDamage(((CharacterData)data).attackDamage);
         }
     }
-    
 }
