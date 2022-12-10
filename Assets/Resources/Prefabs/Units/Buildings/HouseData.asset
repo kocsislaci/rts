@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f512102167410f820be583f8f79a30, type: 3}
   m_Name: HouseData
   m_EditorClassIdentifier: 
-  type: 4
+  type: 6
   fieldOfView: 5
   maxHealth: 5
   defense: 0
   resourcesCost:
   - type: 2
     amount: 5
-  prefab: {fileID: 7698017727602193230, guid: e95b020e5a6cf4643b8545865b0fb3f2, type: 3}
+  actions: []
+  unitPrefab: {fileID: 7698017727602193230, guid: e95b020e5a6cf4643b8545865b0fb3f2, type: 3}
+  iconPrefab: {fileID: 3403114756973916956, guid: 22839cc52f51b4e7baa2b6ce38eccc95, type: 3}
   populationGain: 5

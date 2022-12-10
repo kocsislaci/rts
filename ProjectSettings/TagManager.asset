@@ -25,15 +25,15 @@ TagManager:
   - Water
   - UI
   - Terrain
-  - Unit
-  - MinimapIndicator
-  - Building
-  - Resource
-  - Obstacle
   - Spawnpoint
+  - Resource
+  - Unit
   - Character
-  - 
-  - 
+  - Building
+  - MinimapIndicator
+  - FOV
+  - SpawnPoints
+  - Debug
   - 
   - 
   - 

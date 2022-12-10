@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f512102167410f820be583f8f79a30, type: 3}
+  m_Name: WallData
+  m_EditorClassIdentifier: 
+  type: 8
+  fieldOfView: 1
+  maxHealth: 40
+  defense: 2
+  resourcesCost:
+  - type: 1
+    amount: 2
+  actions: []
+  unitPrefab: {fileID: 4113707490336698779, guid: 26dde77b5360f4ca6b5f534a183826ce, type: 3}
+  iconPrefab: {fileID: 3403114756973916956, guid: b48902d65945c4100b0cf04ecb58487d, type: 3}
+  populationGain: 0

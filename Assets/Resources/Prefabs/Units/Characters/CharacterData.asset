@@ -12,25 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6806969553594dccb35bf8fe7b8b4655, type: 3}
   m_Name: CharacterData
   m_EditorClassIdentifier: 
-  type: 1
-  fieldOfView: 10
-  maxHealth: 10
-  defense: 0
-  resourcesCost:
-  - type: 0
-    amount: 5
-  skills:
-  - {fileID: 11400000, guid: 0c0d72989ac92463284d05f2b9340afd, type: 2}
-  - {fileID: 11400000, guid: 8e405658dba214077bda2061fb1c0330, type: 2}
-  prefab: {fileID: 5747093355480815041, guid: cc4a5b4d1030d4fc384ef798bc23f080, type: 3}
+  type: 0
+  maxHealth: 8
+  defense: 1
   speed: 5
-  reach: 1.5
-  maxLoad: 2
-  gatherUnit: 0
-  gatherSpeed: 1
-  buildingUnit: 1
-  buildingSpeed: 1
-  attackDamage: 2
-  attackSpeed: 1
-  populationCost: 1
-  timeToTrain: 3
+  populationImpact: 1
