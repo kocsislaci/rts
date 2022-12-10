@@ -3,7 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Terrain
+  - Unit
+  - Selection
+  - Building
+  - Resource
+  - Obstacle
+  - PropertyType
+  - PropertyValue
+  - MainBuilding
+  - SpawnCenter
+  - HealtbarCanvas
+  - UI
+  - Character
   layers:
   - Default
   - TransparentFX
@@ -11,16 +24,16 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Terrain
+  - Spawnpoint
+  - Resource
+  - Unit
+  - Character
+  - Building
+  - MinimapIndicator
+  - FOV
+  - SpawnPoints
+  - Debug
   - 
   - 
   - 
