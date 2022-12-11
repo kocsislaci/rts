@@ -41,7 +41,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 77619550966379672}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1
   m_Height: 3
@@ -508,11 +508,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   data: {fileID: 11400000, guid: f59996ce9d30a4e63a22e52f23c92603, type: 2}
+  currentHealth: 0
   selectionCircle: {fileID: 8889317944182518771}
   teamIndicatorList:
   - {fileID: 4893482938120744115}
   minimapIndicator: {fileID: 1642682334290278201}
   <Agent>k__BackingField: {fileID: 1799677258067415446}
+  <Target>k__BackingField: {fileID: 0}
+  <TargeterFOV>k__BackingField: {fileID: 2696677560620471156}
+  <UnitsInFOV>k__BackingField: []
+  <AttackerData>k__BackingField: {fileID: 11400000, guid: cb1c795461dbd4d759db1a7de6397567, type: 2}
+  <AttackRange>k__BackingField: {fileID: 8327233123378180690}
+  <UnitsInAttackRange>k__BackingField: []
   <HarvesterData>k__BackingField: {fileID: 11400000, guid: b36e24cf4d113449bbd0f4c5164efb06, type: 2}
   <CurrentHarvested>k__BackingField: 0
   <CurrentHarvestedTarget>k__BackingField: {fileID: 0}

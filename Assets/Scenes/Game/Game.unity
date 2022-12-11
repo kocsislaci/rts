@@ -7735,6 +7735,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4624545364403046149, guid: c34a184f467de4d588155f744e5b2143, type: 3}
+      propertyPath: debugMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624545364403046149, guid: c34a184f467de4d588155f744e5b2143, type: 3}
       propertyPath: mapManager
       value: 
       objectReference: {fileID: 1314053633}

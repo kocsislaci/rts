@@ -186,6 +186,7 @@ GameObject:
   - component: {fileID: 3033098738711057609}
   - component: {fileID: 6959105595682221455}
   - component: {fileID: 6946795537295647328}
+  - component: {fileID: 5743559013154725529}
   m_Layer: 11
   m_Name: Tower
   m_TagString: Building
@@ -265,6 +266,19 @@ MonoBehaviour:
   <Target>k__BackingField: {fileID: 0}
   <UnitsInFOV>k__BackingField: []
   <TargeterFOV>k__BackingField: {fileID: 8418191829746297444}
+  <AttackerData>k__BackingField: {fileID: 11400000, guid: 88942b0750a9148b8b4a17f8fe0edd44, type: 2}
+--- !u!114 &5743559013154725529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113707490336698779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ada5caa424e403aa442248ad4bb8d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6830852367071079421
 GameObject:
   m_ObjectHideFlags: 0

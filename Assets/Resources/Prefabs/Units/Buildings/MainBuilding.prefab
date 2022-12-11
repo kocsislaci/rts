@@ -332,6 +332,7 @@ MonoBehaviour:
   <Target>k__BackingField: {fileID: 0}
   <UnitsInFOV>k__BackingField: []
   <TargeterFOV>k__BackingField: {fileID: 8574793558977163094}
+  <AttackerData>k__BackingField: {fileID: 11400000, guid: 49fef0c3cead94ac4b86c7f7486c78d0, type: 2}
 --- !u!1 &4805820231003365815
 GameObject:
   m_ObjectHideFlags: 0
