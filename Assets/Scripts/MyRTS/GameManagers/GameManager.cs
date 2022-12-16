@@ -34,14 +34,14 @@ namespace MyRTS.GameManagers
         public void LoadScene(List<Faction> playersToLoad)
         {
             LoadMap();
-            foreach (var faction in playersToLoad)
-            {
-                LoadPlayer(faction, spawnPoints[faction == Faction.Blue ? 0 : 1], faction == Faction.Blue);
-            }
-            if (debugMode)
-            {
-                DebugUnitLoad();
-            }
+            // foreach (var faction in playersToLoad)
+            // {
+            //     LoadPlayer(faction, spawnPoints[faction == Faction.Blue ? 0 : 1], faction == Faction.Blue);
+            // }
+            // if (debugMode)
+            // {
+            //     DebugUnitLoad();
+            // }
         }
 
 

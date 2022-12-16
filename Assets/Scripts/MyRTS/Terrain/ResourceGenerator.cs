@@ -110,7 +110,7 @@ namespace MyRTS.Terrain
             {
                 foreach (var keyValuePair in dictionaryEntry.Value)
                 {
-                    Destroy(keyValuePair.Value);
+                    Destroy(keyValuePair.Value.gameObject);
                 }
                 dictionaryEntry.Value.Clear();
             }
@@ -154,7 +154,7 @@ namespace MyRTS.Terrain
                         Instantiate(
                                 Resources.Load<GameObject>(GameResources.PathToLoadResourcePrefab[ResourceType.Gold]),
                                 new Vector3(x, terrain.SampleHeight(new Vector3(x, 0, z)), z),
-                                Quaternion.identity, 
+                                Quaternion.identity,
                                 GameResources.GoldResourcesParent
                             )
                             .GetComponent<ResourceController>()
@@ -179,7 +179,7 @@ namespace MyRTS.Terrain
                     if (noiseFloat > (1.0f - ratioOfStone) && Random.Range(0.0f, 1.0f) <= chanceOfStone)
                     {
                         isItOccupied[x, z] = true;
-                        Instantiate(
+                        Instantiate(                                
                                 Resources.Load<GameObject>(GameResources.PathToLoadResourcePrefab[ResourceType.Stone]),
                                 new Vector3(x, terrain.SampleHeight(new Vector3(x, 0, z)), z),
                                 Quaternion.identity, 
@@ -212,8 +212,7 @@ namespace MyRTS.Terrain
                                 new Vector3(x, terrain.SampleHeight(new Vector3(x, 0, z)), z),
                                 Quaternion.identity, 
                                 GameResources.WoodResourcesParent
-                            )
-                            .GetComponent<ResourceController>()
+                            ).GetComponent<ResourceController>()
                             .InitialiseResource(ResourceType.Wood);
                     }
                 }
