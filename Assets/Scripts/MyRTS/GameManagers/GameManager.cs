@@ -31,17 +31,36 @@ namespace MyRTS.GameManagers
             });
         }
 
+        [ContextMenu("calc avg")]
+        private void CalculateAveragePosition()
+        {
+            float sum = 0;
+            float sumx = 0;
+            float sumz = 0;
+
+            foreach (var resourceDictionary in ResourcesOnMap)
+            {
+                foreach (var resource in resourceDictionary.Value)
+                {
+                    sum++;
+                    sumx += resource.Value.GetComponent<Transform>().position.x;
+                    sumz += resource.Value.GetComponent<Transform>().position.z;
+                }
+                Debug.Log(resourceDictionary.Key + " avg pos " + new Vector2(sumx / sum, sumz / sum));
+            }
+        }
+
         public void LoadScene(List<Faction> playersToLoad)
         {
             LoadMap();
-            // foreach (var faction in playersToLoad)
-            // {
-            //     LoadPlayer(faction, spawnPoints[faction == Faction.Blue ? 0 : 1], faction == Faction.Blue);
-            // }
-            // if (debugMode)
-            // {
-            //     DebugUnitLoad();
-            // }
+            foreach (var faction in playersToLoad)
+            {
+                LoadPlayer(faction, spawnPoints[faction == Faction.Blue ? 0 : 1], faction == Faction.Blue);
+            }
+            if (debugMode)
+            {
+                DebugUnitLoad();
+            }
         }
 
 
